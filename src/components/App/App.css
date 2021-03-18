@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.list {
+  color: #282c34;
+}
+
+.list .MuiSvgIcon-root {
+  color: #282c34;
+}

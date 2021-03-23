@@ -8,7 +8,7 @@ class SimpleMap extends Component {
             lat: 50.463528,
             lng: 30.5053546
         },
-        zoom: 11
+        zoom: 14
     };
 
     constructor(props) {

@@ -1,0 +1,15 @@
+.exchanger-card {
+    width: 200px;
+    position: absolute;
+    flex-grow: 1;
+}
+
+.exchanger-card .name {
+    font-size: 1rem;
+}
+
+.exchanger-card .rate-row {
+    text-align: center;
+    margin: 5px;
+    box-shadow: none;
+}

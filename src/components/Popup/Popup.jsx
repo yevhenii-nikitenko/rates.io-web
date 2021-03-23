@@ -1,42 +1,45 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
+import { selectExchange } from '../../store/actions';
 
-const useStyles = makeStyles({
-    root: {
-      width: 200,
-      position: 'absolute',
-    },
-  });
+import { useDispatch } from 'react-redux';
+
+import './popup.css';
 
 const Popup = (props) => {
-    const classes = useStyles();
+
+    const dispatch = useDispatch();
 
     return (
-        <Card className={classes.root}>
-            <CardContent>
-                    <CardActionArea>
-                        <Typography variant="h5" component="h2">
-                            {props.place.name}
-                        </Typography>
-                    </CardActionArea>
-            </CardContent>
+        <Card className="exchanger-card">
+            <CardActions>
+                <Button
+                    fullWidth
+                    onClick={() => dispatch(selectExchange(props.place))}>
+                    {props.place.name}
+                </Button>
+            </CardActions>
             <CardContent>
             <Grid container spacing={2}>
                 {Object.keys(props.place.rates).map((currency, index) => (
-                    <Grid container key={index} justify="center" spacing={2}>
+                    <Grid
+                        container
+                        key={index}
+                        justify="center"
+                        spacing={2}>
                         <Grid item xs>
-                            {props.place.rates[currency].bid}
+                            <Paper className="rate-row">{props.place.rates[currency].bid}</Paper>
                         </Grid>
                         <Grid item xs>
-                            {currency}
+                            <Paper className="rate-row">{currency}</Paper>
                         </Grid>
                         <Grid item xs>
-                            {props.place.rates[currency].ask}
+                            <Paper className="rate-row">{props.place.rates[currency].ask}</Paper>
                         </Grid>
                     </Grid>
                 ))}

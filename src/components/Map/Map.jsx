@@ -62,12 +62,21 @@ class SimpleMap extends Component {
     }
 
     render() {
+        console.log('this.props.center', this.props);
+        console.log('SimpleMap', SimpleMap.defaultProps.center)
+
         return (
             <div style={{ height: '100vh', width: '100%' }}>
                 <GoogleMap
-                    bootstrapURLKeys={{ key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA' }}
-                    defaultCenter={this.props.center}
+                    bootstrapURLKeys={{
+                        key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA',
+                        libraries:['places'],
+                    }}
+                    defaultCenter={SimpleMap.defaultProps.center}
+                    center={this.props.center}
                     defaultZoom={this.props.zoom}
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map, maps }) => this.props.handleApiLoaded(map, maps)}
                 >
                     {this.state.places.map(place => (
                         <Marker

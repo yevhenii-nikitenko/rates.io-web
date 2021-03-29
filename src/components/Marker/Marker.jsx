@@ -20,7 +20,11 @@ const Marker = (props) => {
       
     };
   
-    const handleClickAway = () => {
+    const handleClickAway = (event) => {
+      const clickInsideMap = event.path.find(e => e.classList?.contains('map-root'));
+
+      if (!clickInsideMap) return;
+
       dispatch(toggleMarkerIsSelected(false));
       dispatch(deselectExchange());
       setOpen(false);

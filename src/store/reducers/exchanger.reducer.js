@@ -4,23 +4,25 @@ import {
     MARKER_IS_OPENED
  } from '../constants';
 
-const initialState = {
-    selected: null,
-    markerIsOpened: false
-};
+// const initialState = {
+//     selected: null,
+//     markerIsOpened: false
+// };
+
+const initialState = null;
 
 const exchangerReducer = (state = initialState, action) => {
     if (action.type === SELECT_EXCHANGE) {
-        return { ...state, selected: action.payload };
+        return { ...action.payload };
     }
 
     if (action.type === DESELECT_EXCHANGE) {
-        return { ...state, selected: null };
+        return initialState;
     }
 
-    if (action.type === MARKER_IS_OPENED) {
-        return { ...state, markerIsOpened: action.payload };
-    }
+    // if (action.type === MARKER_IS_OPENED) {
+    //     return { ...state, markerIsOpened: action.payload };
+    // }
 
     return state;
 };

@@ -7,7 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCenter } from "../../store/actions";
 
 const CssTextField = withStyles({
   root: {
@@ -33,24 +34,24 @@ const CssTextField = withStyles({
 
 const useStyles = makeStyles((theme) => ({
   icon: {
-    color: "white",
+    color: "#282c34",
     marginRight: theme.spacing(2),
   },
 }));
 
 const LocationPicker = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
-  const placesService = useSelector(
-    (state) => state.googleMaps.placesService
-  );
+  const placesService = useSelector((state) => state.googleMaps.placesService);
+  const city = useSelector((state) => state.googleMaps.city);
   const autocompleteService = useSelector(
     (state) => state.googleMaps.autocompleteService
   );
 
   React.useEffect(() => {
-    setValue(props.city);
-  }, [props.city]);
+    setValue(city);
+  }, [city]);
 
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
@@ -58,27 +59,25 @@ const LocationPicker = (props) => {
   const getPlacePredictions = React.useMemo(
     () =>
       throttle((request, callback) => {
-        autocompleteService &&
-          autocompleteService.getPlacePredictions(
-            {
-              ...request,
-              types: ["(cities)"],
-              componentRestrictions: {
-                country: "ua",
-              },
+        autocompleteService?.getPlacePredictions(
+          {
+            ...request,
+            types: ["(cities)"],
+            componentRestrictions: {
+              country: "ua",
             },
-            callback
-          );
+          },
+          callback
+        );
       }, 200),
     [autocompleteService]
   );
 
   React.useEffect(() => {
     if (inputValue === "") {
-      // set default place here
       setOptions(value ? [value] : []);
 
-      return undefined;
+      return;
     }
 
     getPlacePredictions({ input: inputValue }, (results) => {
@@ -95,6 +94,28 @@ const LocationPicker = (props) => {
       setOptions(newOptions);
     });
   }, [value, inputValue, getPlacePredictions]);
+
+  const onChange = (event, newValue) => {
+    if (newValue?.place_id) {
+      placesService?.getDetails(
+        {
+          placeId: newValue.place_id,
+          fields: ["name", "formatted_address", "place_id", "geometry"],
+        },
+        (res, st) => {
+          dispatch(
+            setCenter({
+              lat: res.geometry.location.lat(),
+              lng: res.geometry.location.lng(),
+            })
+          );
+        }
+      );
+    }
+
+    setOptions(newValue ? [newValue, ...options] : options);
+    setValue(newValue);
+  };
 
   return (
     <Autocomplete
@@ -116,25 +137,7 @@ const LocationPicker = (props) => {
       filterSelectedOptions
       size="small"
       value={value}
-      onChange={(event, newValue) => {
-        if (newValue && newValue.place_id) {
-            placesService && placesService.getDetails(
-              {
-                placeId: newValue.place_id,
-                fields: ["name", "formatted_address", "place_id", "geometry"],
-              },
-              (res, st) => {
-                props.setCoords({
-                  lat: res.geometry.location.lat(),
-                  lng: res.geometry.location.lng(),
-                });
-              }
-            );
-        }
-
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-      }}
+      onChange={onChange}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
@@ -147,6 +150,8 @@ const LocationPicker = (props) => {
         />
       )}
       renderOption={(option) => {
+          // error
+          console.log('x', option);
         const matches =
           option.structured_formatting.main_text_matched_substrings;
         const parts = parse(

@@ -4,7 +4,7 @@ import Pin from '../Pin/Pin';
 import Popup from '../Popup/Popup';
 
 import { useDispatch } from 'react-redux';
-import { toggleMarkerIsSelected } from '../../store/actions';
+import { toggleMarkerIsSelected, deselectExchange } from '../../store/actions';
 
 const Marker = (props) => {
     const [open, setOpen] = React.useState(false);
@@ -22,6 +22,7 @@ const Marker = (props) => {
   
     const handleClickAway = () => {
       dispatch(toggleMarkerIsSelected(false));
+      dispatch(deselectExchange());
       setOpen(false);
     };
 

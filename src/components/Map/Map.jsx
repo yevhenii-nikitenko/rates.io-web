@@ -3,14 +3,6 @@ import GoogleMap from 'google-map-react';
 
 import Marker from '../Marker/Marker.jsx';
 class SimpleMap extends Component {
-    static defaultProps = {
-        center: {
-            lat: 50.463528,
-            lng: 30.5053546
-        },
-        zoom: 14
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -62,9 +54,6 @@ class SimpleMap extends Component {
     }
 
     render() {
-        console.log('this.props.center', this.props);
-        console.log('SimpleMap', SimpleMap.defaultProps.center)
-
         return (
             <div style={{ height: '100vh', width: '100%' }}>
                 <GoogleMap
@@ -72,7 +61,7 @@ class SimpleMap extends Component {
                         key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA',
                         libraries:['places'],
                     }}
-                    defaultCenter={SimpleMap.defaultProps.center}
+                    defaultCenter={this.props.center}
                     center={this.props.center}
                     defaultZoom={this.props.zoom}
                     yesIWantToUseGoogleMapApiInternals

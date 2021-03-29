@@ -1,4 +1,4 @@
-import { SELECT_EXCHANGE, DESELECT_EXCHANGE, MARKER_IS_OPENED } from '../constants';
+import { SELECT_EXCHANGE, DESELECT_EXCHANGE, MARKER_IS_OPENED, SET_GOOGLE_MAPS_API } from '../constants';
 
 export const selectExchange = payload => {
     return { type: SELECT_EXCHANGE, payload };
@@ -11,3 +11,7 @@ export const deselectExchange = () => {
 export const toggleMarkerIsSelected = payload => {
     return { type: MARKER_IS_OPENED, payload };
 };
+
+export const setGoogleMapsApi = payload => {
+    return { type: SET_GOOGLE_MAPS_API, payload };
+}

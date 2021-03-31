@@ -9,7 +9,7 @@ import { selectExchange } from '../../store/actions';
 
 import { useDispatch } from 'react-redux';
 
-import './popup.css';
+import './Popup.css';
 
 const Popup = (props) => {
 

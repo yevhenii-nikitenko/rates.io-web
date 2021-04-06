@@ -1,7 +1,7 @@
 module.exports = {
     env: {
         browser: true,
-        es2021: true,
+        es2020: true,
     },
     extends: ['eslint:recommended', 'plugin:react/recommended'],
     parserOptions: {
@@ -13,7 +13,9 @@ module.exports = {
     },
     plugins: ['react'],
     rules: {
-        'no-unused-vars': 0,
-        'react/prop-types': 0,
+        'no-unused-vars': 'warn',
+        'react/prop-types': 'warn',
+        indent: ['warn', 4],
+        'no-console': 'warn',
     },
 };

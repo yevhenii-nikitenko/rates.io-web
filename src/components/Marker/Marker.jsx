@@ -10,34 +10,35 @@ const Marker = (props) => {
     const [open, setOpen] = React.useState(false);
 
     const dispatch = useDispatch();
-  
-    const handleClick = event => {
-      setOpen((prev) => !prev);
 
-      setTimeout(() => {
-        dispatch(toggleMarkerIsSelected(true));
-      })
-      
+    const handleClick = (event) => {
+        setOpen((prev) => !prev);
+
+        setTimeout(() => {
+            dispatch(toggleMarkerIsSelected(true));
+        });
     };
-  
+
     const handleClickAway = (event) => {
-      const clickInsideMap = event.path.find(e => e.classList?.contains('map-root'));
+        const clickInsideMap = event.path.find((e) =>
+            e.classList?.contains('map-root'),
+        );
 
-      if (!clickInsideMap) return;
+        if (!clickInsideMap) return;
 
-      dispatch(toggleMarkerIsSelected(false));
-      dispatch(deselectExchange());
-      setOpen(false);
+        dispatch(toggleMarkerIsSelected(false));
+        dispatch(deselectExchange());
+        setOpen(false);
     };
 
     return (
         <ClickAwayListener onClickAway={open ? handleClickAway : () => {}}>
-          <div>
-            <Pin handleClick={handleClick} />
-            {open ? <Popup place={props.place} /> : null}
-          </div>
+            <div>
+                <Pin handleClick={handleClick} />
+                {open ? <Popup place={props.place} /> : null}
+            </div>
         </ClickAwayListener>
     );
-  };
+};
 
-  export default Marker;
+export default Marker;

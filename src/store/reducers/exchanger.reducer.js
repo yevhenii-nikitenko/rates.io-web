@@ -1,8 +1,8 @@
 import {
     SELECT_EXCHANGE,
     DESELECT_EXCHANGE,
-    MARKER_IS_OPENED
- } from '../constants';
+    MARKER_IS_OPENED,
+} from '../constants';
 
 // const initialState = {
 //     selected: null,

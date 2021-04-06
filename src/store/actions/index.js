@@ -4,46 +4,46 @@ import {
     MARKER_IS_OPENED,
     SET_GOOGLE_MAPS_API,
     SET_CENTER,
-    SET_CITY
+    SET_CITY,
 } from '../constants';
 
-export const selectExchange = payload => {
+export const selectExchange = (payload) => {
     return {
         type: SELECT_EXCHANGE,
-        payload
+        payload,
     };
 };
 
 export const deselectExchange = () => {
     return {
-        type: DESELECT_EXCHANGE
+        type: DESELECT_EXCHANGE,
     };
 };
 
-export const toggleMarkerIsSelected = payload => {
+export const toggleMarkerIsSelected = (payload) => {
     return {
         type: MARKER_IS_OPENED,
-        payload
+        payload,
     };
 };
 
-export const setGoogleMapsApi = payload => {
+export const setGoogleMapsApi = (payload) => {
     return {
         type: SET_GOOGLE_MAPS_API,
-        payload
+        payload,
     };
-}
+};
 
-export const setCenter = payload => {
+export const setCenter = (payload) => {
     return {
         type: SET_CENTER,
-        payload
+        payload,
     };
-}
+};
 
-export const setCity = payload => {
+export const setCity = (payload) => {
     return {
         type: SET_CITY,
-        payload
+        payload,
     };
-}
+};

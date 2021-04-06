@@ -12,7 +12,6 @@ import { useDispatch } from 'react-redux';
 import './Popup.css';
 
 const Popup = (props) => {
-
     const dispatch = useDispatch();
 
     return (
@@ -20,30 +19,36 @@ const Popup = (props) => {
             <CardActions>
                 <Button
                     fullWidth
-                    onClick={() => dispatch(selectExchange(props.place))}>
+                    onClick={() => dispatch(selectExchange(props.place))}
+                >
                     {props.place.name}
                 </Button>
             </CardActions>
             <CardContent>
-            <Grid container spacing={2}>
-                {Object.keys(props.place.rates).map((currency, index) => (
-                    <Grid
-                        container
-                        key={index}
-                        justify="center"
-                        spacing={2}>
-                        <Grid item xs>
-                            <Paper className="rate-row">{props.place.rates[currency].bid}</Paper>
+                <Grid container spacing={2}>
+                    {Object.keys(props.place.rates).map((currency, index) => (
+                        <Grid
+                            container
+                            key={index}
+                            justify="center"
+                            spacing={2}
+                        >
+                            <Grid item xs>
+                                <Paper className="rate-row">
+                                    {props.place.rates[currency].bid}
+                                </Paper>
+                            </Grid>
+                            <Grid item xs>
+                                <Paper className="rate-row">{currency}</Paper>
+                            </Grid>
+                            <Grid item xs>
+                                <Paper className="rate-row">
+                                    {props.place.rates[currency].ask}
+                                </Paper>
+                            </Grid>
                         </Grid>
-                        <Grid item xs>
-                            <Paper className="rate-row">{currency}</Paper>
-                        </Grid>
-                        <Grid item xs>
-                            <Paper className="rate-row">{props.place.rates[currency].ask}</Paper>
-                        </Grid>
-                    </Grid>
-                ))}
-            </Grid>
+                    ))}
+                </Grid>
             </CardContent>
         </Card>
     );

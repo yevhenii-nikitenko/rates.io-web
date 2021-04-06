@@ -8,7 +8,7 @@ import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setCenter } from "../../store/actions";
+import { setCenter, setCity } from "../../store/actions";
 
 const CssTextField = withStyles({
   root: {
@@ -96,13 +96,17 @@ const LocationPicker = (props) => {
   }, [value, inputValue, getPlacePredictions]);
 
   const onChange = (event, newValue) => {
+    console.log("newValue", newValue);
     if (newValue?.place_id) {
+      dispatch(setCity(newValue));
+
       placesService?.getDetails(
         {
           placeId: newValue.place_id,
           fields: ["name", "formatted_address", "place_id", "geometry"],
         },
         (res, st) => {
+          console.log("res", res);
           dispatch(
             setCenter({
               lat: res.geometry.location.lat(),
@@ -120,12 +124,11 @@ const LocationPicker = (props) => {
   return (
     <Autocomplete
       style={{
-        width: 300,
+        width: "100%",
         background: "white",
-        padding: "7px",
-        margin: "7px",
-        position: "absolute",
-        right: "0px",
+        padding: "6px",
+        margin: "1px 6px",
+        position: "relative",
       }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
@@ -150,8 +153,9 @@ const LocationPicker = (props) => {
         />
       )}
       renderOption={(option) => {
-          // error
-          console.log('x', option);
+        // error
+        console.log("x", option);
+
         const matches =
           option.structured_formatting.main_text_matched_substrings;
         const parts = parse(

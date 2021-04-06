@@ -11,7 +11,7 @@ const Marker = (props) => {
 
     const dispatch = useDispatch();
   
-    const handleClick = () => {
+    const handleClick = event => {
       setOpen((prev) => !prev);
 
       setTimeout(() => {

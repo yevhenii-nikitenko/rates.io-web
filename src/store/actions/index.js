@@ -1,10 +1,11 @@
 import {
     SELECT_EXCHANGE,
     DESELECT_EXCHANGE,
-    MARKER_IS_OPENED,
     SET_GOOGLE_MAPS_API,
-    SET_CENTER,
-    SET_CITY,
+    SET_MAP_CENTER,
+    SET_CURRENT_CITY,
+    ADD_EXCHANGES,
+    CLEAR_EXCHANGES
 } from '../constants';
 
 export const selectExchange = (payload) => {
@@ -20,13 +21,6 @@ export const deselectExchange = () => {
     };
 };
 
-export const toggleMarkerIsSelected = (payload) => {
-    return {
-        type: MARKER_IS_OPENED,
-        payload,
-    };
-};
-
 export const setGoogleMapsApi = (payload) => {
     return {
         type: SET_GOOGLE_MAPS_API,
@@ -34,16 +28,30 @@ export const setGoogleMapsApi = (payload) => {
     };
 };
 
-export const setCenter = (payload) => {
+export const setMapCenter = (payload) => {
     return {
-        type: SET_CENTER,
+        type: SET_MAP_CENTER,
         payload,
     };
 };
 
-export const setCity = (payload) => {
+export const setCurrentCity = (payload) => {
     return {
-        type: SET_CITY,
+        type: SET_CURRENT_CITY,
+        payload,
+    };
+};
+
+export const addExchanges = (payload) => {
+    return {
+        type: ADD_EXCHANGES,
+        payload,
+    };
+};
+
+export const clearExchanges = (payload) => {
+    return {
+        type: CLEAR_EXCHANGES,
         payload,
     };
 };

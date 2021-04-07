@@ -4,7 +4,7 @@ import Pin from '../Pin/Pin';
 import Popup from '../Popup/Popup';
 
 import { useDispatch } from 'react-redux';
-import { toggleMarkerIsSelected, deselectExchange } from '../../store/actions';
+import { deselectExchange } from '../../store/actions';
 
 const Marker = (props) => {
     const [open, setOpen] = React.useState(false);
@@ -13,10 +13,6 @@ const Marker = (props) => {
 
     const handleClick = (event) => {
         setOpen((prev) => !prev);
-
-        setTimeout(() => {
-            dispatch(toggleMarkerIsSelected(true));
-        });
     };
 
     const handleClickAway = (event) => {
@@ -25,8 +21,7 @@ const Marker = (props) => {
         );
 
         if (!clickInsideMap) return;
-
-        dispatch(toggleMarkerIsSelected(false));
+        
         dispatch(deselectExchange());
         setOpen(false);
     };

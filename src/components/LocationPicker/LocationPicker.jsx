@@ -8,7 +8,7 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCenter, setCity } from '../../store/actions';
+import { setMapCenter, setCurrentCity } from '../../store/actions';
 
 const CssTextField = withStyles({
     root: {
@@ -44,16 +44,16 @@ const LocationPicker = (props) => {
     const dispatch = useDispatch();
     const [value, setValue] = React.useState(null);
     const placesService = useSelector(
-        (state) => state.googleMaps.placesService,
+        (state) => state.geo.placesService,
     );
-    const city = useSelector((state) => state.googleMaps.city);
+    const currentCity = useSelector((state) => state.geo.currentCity);
     const autocompleteService = useSelector(
-        (state) => state.googleMaps.autocompleteService,
+        (state) => state.geo.autocompleteService,
     );
 
     React.useEffect(() => {
-        setValue(city);
-    }, [city]);
+        currentCity && setValue(currentCity.name);
+    }, [currentCity]);
 
     const [inputValue, setInputValue] = React.useState('');
     const [options, setOptions] = React.useState([]);
@@ -100,8 +100,6 @@ const LocationPicker = (props) => {
     const onChange = (event, newValue) => {
         console.log('newValue', newValue);
         if (newValue?.place_id) {
-            dispatch(setCity(newValue));
-
             placesService?.getDetails(
                 {
                     placeId: newValue.place_id,
@@ -113,9 +111,9 @@ const LocationPicker = (props) => {
                     ],
                 },
                 (res, st) => {
-                    console.log('res', res);
+                    dispatch(setCurrentCity({ name: res.name, place_id: res.place_id }));
                     dispatch(
-                        setCenter({
+                        setMapCenter({
                             lat: res.geometry.location.lat(),
                             lng: res.geometry.location.lng(),
                         }),
@@ -160,9 +158,6 @@ const LocationPicker = (props) => {
                 />
             )}
             renderOption={(option) => {
-                // error
-                console.log('x', option);
-
                 const matches =
                     option.structured_formatting.main_text_matched_substrings;
                 const parts = parse(

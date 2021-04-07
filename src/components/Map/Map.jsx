@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import GoogleMap from 'google-map-react';
 import { useSelector, useDispatch } from 'react-redux';
 import Marker from '../Marker/Marker.jsx';
-import getCity from '../../libs/getCity';
-import { setGoogleMapsApi, setCity } from '../../store/actions';
+import getCurrentLocation from '../../libs/getCurrentLocation';
+import { setGoogleMapsApi, setCurrentCity } from '../../store/actions';
 
 const db = [
     {
@@ -75,19 +75,18 @@ const db = [
 ];
 
 const Map = (props) => {
-    const center = useSelector((state) => state.googleMaps.center);
-    const city = useSelector((state) => state.googleMaps.city);
+    const mapCenter = useSelector((state) => state.geo.mapCenter);
+    const currentCity = useSelector((state) => state.geo.currentCity);
 
     React.useEffect(() => {
-        console.log('city', city);
-        setPlaces(db);
-        // city && setPlaces(db.filter((place) => place.placeId === city.place_id));
-    }, [city]);
+        currentCity && setPlaces(db.filter((place) => place.placeId === currentCity.place_id));
+    }, [currentCity]);
 
     const dispatch = useDispatch();
     const [places, setPlaces] = useState([]);
 
     const handleApiLoaded = ({ maps, map }) => {
+        /*
         let marker;
 
         map.addListener('click', (mapsMouseEvent) => {
@@ -100,11 +99,11 @@ const Map = (props) => {
                 map,
             });
         });
+        */
 
-        getCity(maps, (data) => {
-            console.log('ddddd', data);
-            setPlaces(db.filter((place) => place.placeId === data.place_id));
-            dispatch(setCity(data.city));
+        getCurrentLocation(maps, (location) => {
+            dispatch(setCurrentCity({ name: location.name, place_id: location.place_id }));
+            setPlaces(db.filter((place) => place.placeId === location.place_id));
         });
 
         dispatch(setGoogleMapsApi({ map, maps }));
@@ -121,7 +120,7 @@ const Map = (props) => {
                     lat: 50.463528,
                     lng: 30.5053546,
                 }}
-                center={center}
+                center={mapCenter}
                 defaultZoom={14}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={handleApiLoaded}

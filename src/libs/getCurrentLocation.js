@@ -1,10 +1,11 @@
 const LOCALITY = 'locality';
 
-const getCity = (maps, callback) => {
+const getCurrentLocation = (maps, callback) => {
     if (navigator.geolocation) {
-        var geocoder = new maps.Geocoder();
+        const geocoder = new maps.Geocoder();
+
         navigator.geolocation.getCurrentPosition((position) => {
-            var geolocate = new maps.LatLng(
+            const geolocate = new maps.LatLng(
                 position.coords.latitude,
                 position.coords.longitude,
             );
@@ -15,23 +16,22 @@ const getCity = (maps, callback) => {
                 },
                 (results, status) => {
                     if (status === maps.GeocoderStatus.OK) {
-                        console.log('results', results);
                         if (results[1]) {
-                            var city = null;
-                            var place_id = null;
-                            var c, lc, component;
+                            let city = null;
+                            let place_id = null;
+                            let c, lc, component;
 
                             for (
-                                var r = 0, rl = results.length;
+                                let r = 0, rl = results.length;
                                 r < rl;
                                 r += 1
                             ) {
-                                var result = results[r];
+                                let result = results[r];
 
                                 if (!city && result.types[0] === LOCALITY) {
                                     for (
                                         c = 0,
-                                            lc =
+                                        lc =
                                                 result.address_components
                                                     .length;
                                         c < lc;
@@ -50,10 +50,12 @@ const getCity = (maps, callback) => {
                             }
 
                             callback({
-                                city,
+                                name: city,
                                 place_id,
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
+                                coords: {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude
+                                }
                             });
                         }
                     }
@@ -63,4 +65,4 @@ const getCity = (maps, callback) => {
     }
 };
 
-export default getCity;
+export default getCurrentLocation;

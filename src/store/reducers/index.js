@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import exchangerReducer from './exchanger.reducer';
-import mapReducer from './maps.reducer';
+import exchangesReducer from './exchanges.reducer';
+import geoReducer from './geo.reducer';
 
 const rootReducer = combineReducers({
-    exchanger: exchangerReducer,
-    googleMaps: mapReducer,
+    exchanges: exchangesReducer,
+    geo: geoReducer
 });
 
 export default rootReducer;

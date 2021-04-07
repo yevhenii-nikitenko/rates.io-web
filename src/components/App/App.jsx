@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 
 const App = () => {
-    const exchanger = useSelector((state) => state.exchanger);
+    const selectedExchanger = useSelector((state) => state.exchanges.selected);
 
     const [operation, setOperation] = React.useState(false);
     const [currency, setCurrency] = React.useState('');
@@ -55,10 +55,10 @@ const App = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {exchanger ? (
+                    {selectedExchanger ? (
                         <Grid container>
                             <Grid item xs={12}>
-                                <PlaceDetails exchanger={exchanger} />
+                                <PlaceDetails exchanger={selectedExchanger} />
                             </Grid>
                         </Grid>
                     ) : (

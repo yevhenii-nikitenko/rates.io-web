@@ -5,7 +5,8 @@ import {
     SET_MAP_CENTER,
     SET_CURRENT_CITY,
     ADD_EXCHANGES,
-    CLEAR_EXCHANGES
+    CLEAR_EXCHANGES,
+    SET_PRESELECTED,
 } from '../constants';
 
 export const selectExchange = (payload) => {
@@ -52,6 +53,13 @@ export const addExchanges = (payload) => {
 export const clearExchanges = (payload) => {
     return {
         type: CLEAR_EXCHANGES,
+        payload,
+    };
+};
+
+export const setPreselected = (payload) => {
+    return {
+        type: SET_PRESELECTED,
         payload,
     };
 };

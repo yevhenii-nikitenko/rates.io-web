@@ -15,7 +15,12 @@ const Popup = (props) => {
     const dispatch = useDispatch();
 
     return (
-        <Card className="exchanger-card">
+        <Card
+            className="exchanger-card"
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
+        >
             <CardActions>
                 <Button
                     fullWidth

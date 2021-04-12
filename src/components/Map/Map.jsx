@@ -3,7 +3,12 @@ import GoogleMap from 'google-map-react';
 import { useSelector, useDispatch } from 'react-redux';
 import Marker from '../Marker/Marker.jsx';
 import getCurrentLocation from '../../libs/getCurrentLocation';
-import { setGoogleMapsApi, setCurrentCity } from '../../store/actions';
+import {
+    setGoogleMapsApi,
+    setCurrentCity,
+    setMapCenter,
+} from '../../store/actions';
+import StartingPoint from '../StartingPoint/StartingPoint.jsx';
 
 const db = [
     {
@@ -74,36 +79,42 @@ const db = [
     },
 ];
 
-const Map = (props) => {
+const Map = () => {
     const mapCenter = useSelector((state) => state.geo.mapCenter);
     const currentCity = useSelector((state) => state.geo.currentCity);
+    const preselected = useSelector((state) => state.exchanges.preselected);
+
+    console.log('preselected', preselected);
 
     React.useEffect(() => {
-        currentCity && setPlaces(db.filter((place) => place.placeId === currentCity.place_id));
+        currentCity &&
+            setPlaces(
+                db.filter((place) => place.placeId === currentCity.place_id),
+            );
     }, [currentCity]);
 
     const dispatch = useDispatch();
     const [places, setPlaces] = useState([]);
 
     const handleApiLoaded = ({ maps, map }) => {
-        /*
-        let marker;
+        map.addListener('click', (event) => {
+            console.log('eventttt', preselected);
+            const latLng = event.latLng.toJSON();
 
-        map.addListener('click', (mapsMouseEvent) => {
-            const latLng = mapsMouseEvent.latLng.toJSON();
-
-            if (marker) marker.setMap(null);
-
-            marker = new maps.Marker({
-                position: latLng,
-                map,
-            });
+            dispatch(setMapCenter(latLng));
         });
-        */
 
         getCurrentLocation(maps, (location) => {
-            dispatch(setCurrentCity({ name: location.name, place_id: location.place_id }));
-            setPlaces(db.filter((place) => place.placeId === location.place_id));
+            dispatch(setMapCenter(location.coords));
+            dispatch(
+                setCurrentCity({
+                    name: location.name,
+                    place_id: location.place_id,
+                }),
+            );
+            setPlaces(
+                db.filter((place) => place.placeId === location.place_id),
+            );
         });
 
         dispatch(setGoogleMapsApi({ map, maps }));
@@ -133,6 +144,9 @@ const Map = (props) => {
                         place={place}
                     />
                 ))}
+                {mapCenter ? (
+                    <StartingPoint lat={mapCenter.lat} lng={mapCenter.lng} />
+                ) : null}
             </GoogleMap>
         </div>
     );

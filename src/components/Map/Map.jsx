@@ -82,9 +82,6 @@ const db = [
 const Map = () => {
     const mapCenter = useSelector((state) => state.geo.mapCenter);
     const currentCity = useSelector((state) => state.geo.currentCity);
-    const preselected = useSelector((state) => state.exchanges.preselected);
-
-    console.log('preselected', preselected);
 
     React.useEffect(() => {
         currentCity &&
@@ -98,7 +95,10 @@ const Map = () => {
 
     const handleApiLoaded = ({ maps, map }) => {
         map.addListener('click', (event) => {
-            console.log('eventttt', preselected);
+            const cardIsOpen = document.querySelector('.exchanger-card');
+
+            if (cardIsOpen) return;
+
             const latLng = event.latLng.toJSON();
 
             dispatch(setMapCenter(latLng));
@@ -121,7 +121,7 @@ const Map = () => {
     };
 
     return (
-        <div className="map-root" style={{ height: '100vh', width: '100%' }}>
+        <div id="root" className="map-root" style={{ height: '100vh', width: '100%' }}>
             <GoogleMap
                 bootstrapURLKeys={{
                     key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA',

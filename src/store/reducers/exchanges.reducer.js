@@ -3,11 +3,9 @@ import {
     DESELECT_EXCHANGE,
     ADD_EXCHANGES,
     CLEAR_EXCHANGES,
-    SET_PRESELECTED,
 } from '../constants';
 
 const initialState = {
-    preselected: false, // pin is selected
     selected: null, // selected exchanger
     list: [], // list of loaded exchangers
 };
@@ -27,10 +25,6 @@ const exchangesReducer = (state = initialState, action) => {
 
     if (action.type === CLEAR_EXCHANGES) {
         return { ...state, list: [] };
-    }
-
-    if (action.type === SET_PRESELECTED) {
-        return { ...state, preselected: action.payload };
     }
 
     return state;

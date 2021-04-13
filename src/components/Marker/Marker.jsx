@@ -4,7 +4,7 @@ import Pin from '../Pin/Pin';
 import Popup from '../Popup/Popup';
 
 import { useDispatch } from 'react-redux';
-import { deselectExchange, setPreselected } from '../../store/actions';
+import { deselectExchange } from '../../store/actions';
 
 const Marker = (props) => {
     const [open, setOpen] = React.useState(false);
@@ -13,7 +13,6 @@ const Marker = (props) => {
 
     const handleClick = () => {
         setOpen((prev) => !prev);
-        dispatch(setPreselected(true));
     };
 
     const handleClickAway = (event) => {
@@ -24,8 +23,7 @@ const Marker = (props) => {
         if (!clickInsideMap) return;
 
         dispatch(deselectExchange());
-        dispatch(setPreselected(false));
-        // setPreselected(false);
+        setOpen(false);
     };
 
     return (

@@ -1,7 +1,6 @@
 import {
     SELECT_EXCHANGE,
     DESELECT_EXCHANGE,
-    SET_GOOGLE_MAPS_API,
     SET_MAP_CENTER,
     SET_CURRENT_CITY,
     ADD_EXCHANGES,
@@ -18,13 +17,6 @@ export const selectExchange = (payload) => {
 export const deselectExchange = () => {
     return {
         type: DESELECT_EXCHANGE,
-    };
-};
-
-export const setGoogleMapsApi = (payload) => {
-    return {
-        type: SET_GOOGLE_MAPS_API,
-        payload,
     };
 };
 

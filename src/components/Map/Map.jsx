@@ -3,12 +3,9 @@ import GoogleMap from 'google-map-react';
 import { useSelector, useDispatch } from 'react-redux';
 import Marker from '../Marker/Marker.jsx';
 import getCurrentLocation from '../../libs/getCurrentLocation';
-import {
-    setGoogleMapsApi,
-    setCurrentCity,
-    setMapCenter,
-} from '../../store/actions';
+import { setCurrentCity, setMapCenter } from '../../store/actions';
 import StartingPoint from '../StartingPoint/StartingPoint.jsx';
+import GoogleMapsServicesContext from '../../context/googleMapsServices';
 
 const db = [
     {
@@ -82,6 +79,9 @@ const db = [
 const Map = () => {
     const mapCenter = useSelector((state) => state.geo.mapCenter);
     const currentCity = useSelector((state) => state.geo.currentCity);
+    const { setAutocompleteService, setPlacesService } = React.useContext(
+        GoogleMapsServicesContext,
+    );
 
     React.useEffect(() => {
         currentCity &&
@@ -94,6 +94,9 @@ const Map = () => {
     const [places, setPlaces] = useState([]);
 
     const handleApiLoaded = ({ maps, map }) => {
+        setAutocompleteService(new maps.places.AutocompleteService());
+        setPlacesService(new maps.places.PlacesService(map));
+
         map.addListener('click', (event) => {
             const cardIsOpen = document.querySelector('.exchanger-card');
 
@@ -116,12 +119,14 @@ const Map = () => {
                 db.filter((place) => place.placeId === location.place_id),
             );
         });
-
-        dispatch(setGoogleMapsApi({ map, maps }));
     };
 
     return (
-        <div id="root" className="map-root" style={{ height: '100vh', width: '100%' }}>
+        <div
+            id="root"
+            className="map-root"
+            style={{ height: '100vh', width: '100%' }}
+        >
             <GoogleMap
                 bootstrapURLKeys={{
                     key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA',

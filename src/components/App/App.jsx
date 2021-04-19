@@ -15,10 +15,12 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
+import GoogleMapsServicesContext from '../../context/googleMapsServices';
 
 const App = () => {
+    const [autocompleteService, setAutocompleteService] = React.useState(null);
+    const [placesService, setPlacesService] = React.useState(null);
     const selectedExchanger = useSelector((state) => state.exchanges.selected);
-
     const [operation, setOperation] = React.useState(false);
     const [currency, setCurrency] = React.useState('');
     const [currencies, setCurrencies] = React.useState([
@@ -31,78 +33,98 @@ const App = () => {
     ]);
 
     return (
-        <div className="app-root">
-            <Grid container>
-                <Grid item xs={6}>
-                    <AppBar position="sticky" className="app-bar">
-                        <Toolbar>
+        <GoogleMapsServicesContext.Provider
+            value={{
+                autocompleteService,
+                setAutocompleteService,
+                placesService,
+                setPlacesService,
+            }}
+        >
+            <div className="app-root">
+                <Grid container>
+                    <Grid item xs={6}>
+                        <AppBar position="sticky" className="app-bar">
+                            <Toolbar>
+                                <Grid container>
+                                    <Grid item xs={6} style={{ padding: 5 }}>
+                                        <IconButton
+                                            color="inherit"
+                                            aria-label="open drawer"
+                                            edge="start"
+                                        >
+                                            <RiExchangeDollarLine
+                                                size="1.2em"
+                                                color="white"
+                                            />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={6} style={{ padding: 5 }}>
+                                        <LocationPicker />
+                                    </Grid>
+                                </Grid>
+                            </Toolbar>
+                        </AppBar>
+                        {selectedExchanger ? (
                             <Grid container>
-                                <Grid item xs={6} style={{ padding: 5 }}>
-                                    <IconButton
-                                        color="inherit"
-                                        aria-label="open drawer"
-                                        edge="start"
-                                    >
-                                        <RiExchangeDollarLine
-                                            size="1.2em"
-                                            color="white"
-                                        />
-                                    </IconButton>
-                                </Grid>
-                                <Grid item xs={6} style={{ padding: 5 }}>
-                                    <LocationPicker />
+                                <Grid item xs={12}>
+                                    <PlaceDetails
+                                        exchanger={selectedExchanger}
+                                    />
                                 </Grid>
                             </Grid>
-                        </Toolbar>
-                    </AppBar>
-                    {selectedExchanger ? (
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <PlaceDetails exchanger={selectedExchanger} />
-                            </Grid>
-                        </Grid>
-                    ) : (
-                        <Grid container>
-                            <Grid item xs={6} style={{ padding: 10 }}>
-                                <Typography display="inline">Buy</Typography>
-                                <Switch
-                                    checked={operation}
-                                    color="default"
-                                    onChange={() => setOperation(!operation)}
-                                />
-                                <Typography display="inline">Sell</Typography>
-                            </Grid>
-                            <Grid item xs={6} style={{ padding: 10 }}>
-                                <FormControl
-                                    variant="outlined"
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                >
-                                    <InputLabel>Currency</InputLabel>
-                                    <Select
-                                        value={currency}
-                                        onChange={(event) =>
-                                            setCurrency(event.target.value)
+                        ) : (
+                            <Grid container>
+                                <Grid item xs={6} style={{ padding: 10 }}>
+                                    <Typography display="inline">
+                                        Buy
+                                    </Typography>
+                                    <Switch
+                                        checked={operation}
+                                        color="default"
+                                        onChange={() =>
+                                            setOperation(!operation)
                                         }
-                                        label="Currency"
+                                    />
+                                    <Typography display="inline">
+                                        Sell
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={6} style={{ padding: 10 }}>
+                                    <FormControl
+                                        variant="outlined"
+                                        style={{
+                                            width: '100%',
+                                        }}
                                     >
-                                        {currencies.map((name, index) => (
-                                            <MenuItem key={index} value={name}>
-                                                {name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                        <InputLabel>Currency</InputLabel>
+                                        <Select
+                                            value={currency}
+                                            onChange={(event) =>
+                                                setCurrency(event.target.value)
+                                            }
+                                            label="Currency"
+                                        >
+                                            {currencies.map((name, index) => (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={name}
+                                                >
+                                                    {name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    )}
+                        )}
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Map />
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <Map />
-                </Grid>
-            </Grid>
-        </div>
+            </div>
+        </GoogleMapsServicesContext.Provider>
     );
 };
 

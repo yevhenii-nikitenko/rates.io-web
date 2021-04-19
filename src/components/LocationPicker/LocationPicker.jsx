@@ -9,6 +9,7 @@ import throttle from 'lodash/throttle';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMapCenter, setCurrentCity } from '../../store/actions';
+import GoogleMapsServicesContext from '../../context/googleMapsServices';
 
 const CssTextField = withStyles({
     root: {
@@ -39,17 +40,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LocationPicker = (props) => {
+const LocationPicker = () => {
+    const { autocompleteService, placesService } = React.useContext(
+        GoogleMapsServicesContext,
+    );
     const classes = useStyles();
     const dispatch = useDispatch();
     const [value, setValue] = React.useState(null);
-    const placesService = useSelector(
-        (state) => state.geo.placesService,
-    );
     const currentCity = useSelector((state) => state.geo.currentCity);
-    const autocompleteService = useSelector(
-        (state) => state.geo.autocompleteService,
-    );
 
     React.useEffect(() => {
         currentCity && setValue(currentCity.name);
@@ -111,7 +109,12 @@ const LocationPicker = (props) => {
                     ],
                 },
                 (res, st) => {
-                    dispatch(setCurrentCity({ name: res.name, place_id: res.place_id }));
+                    dispatch(
+                        setCurrentCity({
+                            name: res.name,
+                            place_id: res.place_id,
+                        }),
+                    );
                     dispatch(
                         setMapCenter({
                             lat: res.geometry.location.lat(),

@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
@@ -23,6 +24,7 @@ const App = () => {
     const selectedExchanger = useSelector((state) => state.exchanges.selected);
     const [operation, setOperation] = React.useState(false);
     const [currency, setCurrency] = React.useState('');
+    const [distance, setDistance] = React.useState(-1);
     const [currencies, setCurrencies] = React.useState([
         'usd',
         'eur',
@@ -31,6 +33,12 @@ const App = () => {
         'cad',
         'rub',
     ]);
+
+    const handleFind = () => {
+        console.log('currency', currency);
+        console.log('distance', distance);
+        console.log('operation', operation);
+    };
 
     return (
         <GoogleMapsServicesContext.Provider
@@ -50,7 +58,6 @@ const App = () => {
                                     <Grid item xs={6} style={{ padding: 5 }}>
                                         <IconButton
                                             color="inherit"
-                                            aria-label="open drawer"
                                             edge="start"
                                         >
                                             <RiExchangeDollarLine
@@ -75,7 +82,7 @@ const App = () => {
                             </Grid>
                         ) : (
                             <Grid container>
-                                <Grid item xs={6} style={{ padding: 10 }}>
+                                <Grid item xs={3} style={{ padding: 10 }}>
                                     <Typography display="inline">
                                         Buy
                                     </Typography>
@@ -90,7 +97,7 @@ const App = () => {
                                         Sell
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={6} style={{ padding: 10 }}>
+                                <Grid item xs={3} style={{ padding: 10 }}>
                                     <FormControl
                                         variant="outlined"
                                         style={{
@@ -115,6 +122,42 @@ const App = () => {
                                             ))}
                                         </Select>
                                     </FormControl>
+                                </Grid>
+                                <Grid item xs={3} style={{ padding: 10 }}>
+                                    <FormControl
+                                        variant="outlined"
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                    >
+                                        <InputLabel>Distance</InputLabel>
+                                        <Select
+                                            value={distance}
+                                            onChange={(event) =>
+                                                setDistance(event.target.value)
+                                            }
+                                            label="Currency"
+                                        >
+                                            <MenuItem value={-1}>any</MenuItem>
+                                            <MenuItem value={0.5}>0.5</MenuItem>
+                                            <MenuItem value={1}>1</MenuItem>
+                                            <MenuItem value={2}>2</MenuItem>
+                                            <MenuItem value={3}>3</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={3} style={{ padding: 10 }}>
+                                    <Button
+                                        color="primary"
+                                        variant="contained"
+                                        style={{
+                                            width: '100%',
+                                            background: '#282c34',
+                                        }}
+                                        onClick={handleFind}
+                                    >
+                                        Find
+                                    </Button>
                                 </Grid>
                             </Grid>
                         )}

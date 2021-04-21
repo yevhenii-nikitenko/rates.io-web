@@ -22,11 +22,77 @@ const db = [
             },
             eur: {
                 bid: 32.71,
-                ask: 23.05,
+                ask: 33.05,
             },
             rub: {
                 bid: 0.37591,
                 ask: 0.381,
+            },
+        },
+    },
+    {
+        id: '4',
+        lat: 50.431827077705904,
+        lng: 30.516055949277238,
+        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
+        name: 'TBA 2',
+        address: 'NSK',
+        rates: {
+            usd: {
+                bid: 27.31,
+                ask: 27.82,
+            },
+            eur: {
+                bid: 32.65,
+                ask: 33.12,
+            },
+            rub: {
+                bid: 0.3739,
+                ask: 0.386,
+            },
+        },
+    },
+    {
+        id: '5',
+        lat: 50.44857126089789,
+        lng: 30.52294631318082,
+        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
+        name: 'Independence',
+        address: 'Maidan',
+        rates: {
+            usd: {
+                bid: 27.3,
+                ask: 28.2,
+            },
+            eur: {
+                bid: 32.65,
+                ask: 33.22,
+            },
+            rub: {
+                bid: 0.3739,
+                ask: 0.3861,
+            },
+        },
+    },
+    {
+        id: '6',
+        lat: 50.44976568088775,
+        lng: 30.44407370854561,
+        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
+        name: 'Shiliavka',
+        address: 'Hetmana 33',
+        rates: {
+            usd: {
+                bid: 28.1,
+                ask: 28.21,
+            },
+            eur: {
+                bid: 32.66,
+                ask: 33.39,
+            },
+            rub: {
+                bid: 0.37999,
+                ask: 0.386,
             },
         },
     },
@@ -44,7 +110,7 @@ const db = [
             },
             eur: {
                 bid: 32.71,
-                ask: 23.05,
+                ask: 33.05,
             },
             rub: {
                 bid: 0.3771,

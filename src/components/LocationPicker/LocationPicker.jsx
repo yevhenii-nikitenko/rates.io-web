@@ -96,7 +96,6 @@ const LocationPicker = () => {
     }, [value, inputValue, getPlacePredictions]);
 
     const onChange = (event, newValue) => {
-        console.log('newValue', newValue);
         if (newValue?.place_id) {
             placesService?.getDetails(
                 {
@@ -126,7 +125,7 @@ const LocationPicker = () => {
         }
 
         setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
+        newValue && setValue(newValue);
     };
 
     return (

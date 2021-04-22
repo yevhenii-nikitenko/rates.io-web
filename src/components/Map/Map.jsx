@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GoogleMap from 'google-map-react';
 import { useSelector, useDispatch } from 'react-redux';
 import Marker from '../Marker/Marker.jsx';
@@ -7,158 +7,13 @@ import { setCurrentCity, setMapCenter } from '../../store/actions';
 import StartingPoint from '../StartingPoint/StartingPoint.jsx';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
 
-const db = [
-    {
-        id: '1',
-        lat: 50.46778395757881,
-        lng: 30.5142389197426,
-        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
-        name: 'TBA',
-        address: 'Mezhyhirska street, near Apteca',
-        rates: {
-            usd: {
-                bid: 27.6,
-                ask: 27.8,
-            },
-            eur: {
-                bid: 32.71,
-                ask: 33.05,
-            },
-            rub: {
-                bid: 0.37591,
-                ask: 0.381,
-            },
-        },
-    },
-    {
-        id: '4',
-        lat: 50.431827077705904,
-        lng: 30.516055949277238,
-        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
-        name: 'TBA 2',
-        address: 'NSK',
-        rates: {
-            usd: {
-                bid: 27.31,
-                ask: 27.82,
-            },
-            eur: {
-                bid: 32.65,
-                ask: 33.12,
-            },
-            rub: {
-                bid: 0.3739,
-                ask: 0.386,
-            },
-        },
-    },
-    {
-        id: '5',
-        lat: 50.44857126089789,
-        lng: 30.52294631318082,
-        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
-        name: 'Independence',
-        address: 'Maidan',
-        rates: {
-            usd: {
-                bid: 27.3,
-                ask: 28.2,
-            },
-            eur: {
-                bid: 32.65,
-                ask: 33.22,
-            },
-            rub: {
-                bid: 0.3739,
-                ask: 0.3861,
-            },
-        },
-    },
-    {
-        id: '6',
-        lat: 50.44976568088775,
-        lng: 30.44407370854561,
-        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
-        name: 'Shiliavka',
-        address: 'Hetmana 33',
-        rates: {
-            usd: {
-                bid: 28.1,
-                ask: 28.21,
-            },
-            eur: {
-                bid: 32.66,
-                ask: 33.39,
-            },
-            rub: {
-                bid: 0.37999,
-                ask: 0.386,
-            },
-        },
-    },
-    {
-        id: '3',
-        lat: 51.46778395757881,
-        lng: 31.5142389197426,
-        name: 'Far awayt',
-        placeId: 'ChIJlzXucYlI1UYRtThg59NIIyo',
-        address: 'xz',
-        rates: {
-            usd: {
-                bid: 27.61,
-                ask: 27.56,
-            },
-            eur: {
-                bid: 32.71,
-                ask: 33.05,
-            },
-            rub: {
-                bid: 0.3771,
-                ask: 0.381,
-            },
-        },
-    },
-    {
-        id: '2',
-        lat: 50.47032071457849,
-        lng: 30.521811373320006,
-        name: 'Khoryva',
-        address: 'Naberezhno-Khreschatiskaya cross Khoryva',
-        placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
-        rates: {
-            usd: {
-                bid: 27.61,
-                ask: 27.79,
-            },
-            eur: {
-                bid: 32.75,
-                ask: 23.1,
-            },
-            rub: {
-                bid: 0.3759,
-                ask: 0.38112,
-            },
-        },
-    },
-];
-
-const Map = () => {
+const Map = (props) => {
     const mapCenter = useSelector((state) => state.geo.mapCenter);
-    const currentCity = useSelector((state) => state.geo.currentCity);
     const { setAutocompleteService, setPlacesService } = React.useContext(
         GoogleMapsServicesContext,
     );
 
-    React.useEffect(() => {
-        currentCity &&
-            setPlaces(
-                db.filter((place) => place.placeId === currentCity.place_id),
-            );
-    }, [currentCity]);
-
     const dispatch = useDispatch();
-    const [places, setPlaces] = useState([]);
-
     const handleApiLoaded = ({ maps, map }) => {
         setAutocompleteService(new maps.places.AutocompleteService());
         setPlacesService(new maps.places.PlacesService(map));
@@ -180,9 +35,6 @@ const Map = () => {
                     name: location.name,
                     place_id: location.place_id,
                 }),
-            );
-            setPlaces(
-                db.filter((place) => place.placeId === location.place_id),
             );
         });
     };
@@ -207,7 +59,7 @@ const Map = () => {
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={handleApiLoaded}
             >
-                {places.map((place) => (
+                {props.places.map((place) => (
                     <Marker
                         key={place.id}
                         lat={place.lat}

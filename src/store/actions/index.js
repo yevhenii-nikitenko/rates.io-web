@@ -4,6 +4,7 @@ import {
     SET_MAP_CENTER,
     SET_CURRENT_CITY,
     ADD_EXCHANGES,
+    SET_EXCHANGES,
     CLEAR_EXCHANGES,
 } from '../constants';
 
@@ -37,6 +38,13 @@ export const setCurrentCity = (payload) => {
 export const addExchanges = (payload) => {
     return {
         type: ADD_EXCHANGES,
+        payload,
+    };
+};
+
+export const setExchanges = (payload) => {
+    return {
+        type: SET_EXCHANGES,
         payload,
     };
 };

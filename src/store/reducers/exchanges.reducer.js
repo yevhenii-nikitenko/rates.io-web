@@ -3,6 +3,7 @@ import {
     DESELECT_EXCHANGE,
     ADD_EXCHANGES,
     CLEAR_EXCHANGES,
+    SET_EXCHANGES,
 } from '../constants';
 
 const initialState = {
@@ -20,7 +21,11 @@ const exchangesReducer = (state = initialState, action) => {
     }
 
     if (action.type === ADD_EXCHANGES) {
-        return { ...state, list: [...this.state.list, ...action.payload] };
+        return { ...state, list: [...state.list, ...action.payload] };
+    }
+
+    if (action.type === SET_EXCHANGES) {
+        return { ...state, list: action.payload || [] };
     }
 
     if (action.type === CLEAR_EXCHANGES) {

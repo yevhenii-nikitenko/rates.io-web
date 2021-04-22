@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
-import SearchForm from '../SearchForm/SearchForm';
 import { setExchanges } from '../../store/actions';
 
 import places from '../../db/places';
@@ -20,7 +19,14 @@ const App = () => {
     const currentCity = useSelector((state) => state.geo.currentCity);
 
     React.useEffect(() => {
-        currentCity && dispatch(setExchanges(places.filter((place) => place.placeId === currentCity.place_id)));
+        currentCity &&
+            dispatch(
+                setExchanges(
+                    places.filter(
+                        (place) => place.placeId === currentCity.place_id,
+                    ),
+                ),
+            );
     }, [currentCity]);
 
     return (
@@ -34,10 +40,19 @@ const App = () => {
         >
             <div className="app-root">
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} className="app-exchanges-main" style={{
+                        overflowY: 'scroll',
+                        height: '100vh'
+                    }}>
                         <Header />
-                        <SearchForm />
-                        {/* </List exchanges={exchanges} /> */}
+                        {exchanges.map((exchange) => {
+                            return (
+                                <PlaceDetails
+                                    key={exchange.id}
+                                    exchanger={exchange}
+                                />
+                            );
+                        })}
                         {selectedExchanger ? (
                             <Grid container>
                                 <Grid item xs={12}>
@@ -46,7 +61,7 @@ const App = () => {
                                     />
                                 </Grid>
                             </Grid>
-                        ) :  null}
+                        ) : null}
                     </Grid>
                     <Grid item xs={6}>
                         <Map places={exchanges} />

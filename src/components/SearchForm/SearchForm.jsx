@@ -30,21 +30,21 @@ const SearchForm = () => {
     };
 
     return (
-        <Grid container>
-            <Grid item xs={3} style={{ padding: 10 }}>
-                <Typography display="inline">
-                                        Buy
-                </Typography>
+        <Grid container style={{ background: 'white' }}>
+            <Grid item xs={3} style={{ padding: 10, color: '#282c34' }}>
+                <Typography display="inline">Buy</Typography>
                 <Switch
                     checked={operation === operations.SELL}
                     color="default"
                     onChange={() => {
-                        setOperation((operation === operations.SELL) ? operations.BUY : operations.SELL);
+                        setOperation(
+                            operation === operations.SELL
+                                ? operations.BUY
+                                : operations.SELL,
+                        );
                     }}
                 />
-                <Typography display="inline">
-                                        Sell
-                </Typography>
+                <Typography display="inline">Sell</Typography>
             </Grid>
             <Grid item xs={3} style={{ padding: 10 }}>
                 <FormControl
@@ -56,16 +56,11 @@ const SearchForm = () => {
                     <InputLabel>Currency</InputLabel>
                     <Select
                         value={currency}
-                        onChange={(event) =>
-                            setCurrency(event.target.value)
-                        }
+                        onChange={(event) => setCurrency(event.target.value)}
                         label="Currency"
                     >
                         {currencies.map((name, index) => (
-                            <MenuItem
-                                key={index}
-                                value={name}
-                            >
+                            <MenuItem key={index} value={name}>
                                 {name}
                             </MenuItem>
                         ))}
@@ -82,9 +77,7 @@ const SearchForm = () => {
                     <InputLabel>Distance</InputLabel>
                     <Select
                         value={distance}
-                        onChange={(event) =>
-                            setDistance(event.target.value)
-                        }
+                        onChange={(event) => setDistance(event.target.value)}
                         label="Currency"
                     >
                         <MenuItem value={-1}>any</MenuItem>

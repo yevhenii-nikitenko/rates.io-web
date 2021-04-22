@@ -25,3 +25,17 @@
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiInputLabel-shrink {
     transform: translate(14px, -6px) scale(0.75);
 }
+
+.app-exchanges-main::-webkit-scrollbar-track {
+    -webkit-box-shadow: #282c34;
+    background-color: #f5f5f5;
+}
+
+.app-exchanges-main::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+}
+
+.app-exchanges-main::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}

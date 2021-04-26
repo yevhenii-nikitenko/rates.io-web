@@ -58,8 +58,8 @@ const SearchForm = () => {
                     >
                         <MenuItem value={ANY_CURRENCY}>Any</MenuItem>
                         {currencies.map((currency, index) => (
-                            <MenuItem key={index} value={currency.code}>
-                                {currency.symbol ? currency.symbol + ' ' : ''}{currency.name}
+                            <MenuItem key={index} value={currency}>
+                                {currency.symbol ? currency.symbol + ' ' : ''}{currency.name} ({currency.code})
                             </MenuItem>
                         ))}
                     </Select>

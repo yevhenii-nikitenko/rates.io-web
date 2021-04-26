@@ -32,14 +32,16 @@ const Map = () => {
         });
 
         window.google.maps.event.addListener(circle, events.CLICK, (event) => {
-            window.google.maps.event.clearListeners(circle, events.CLICK);
             window.google.maps.event.trigger(map, events.CLICK, event);
 
             const cardIsOpen = document.querySelector(EXCHANGER_CARD_CLASS);
 
-            if (cardIsOpen) return;
-
-            circle.setMap(null);
+            if (cardIsOpen) {
+                return;
+            } else {
+                window.google.maps.event.clearListeners(circle, events.CLICK);
+                circle.setMap(null);
+            }
         });
 
         setCircle(circle);
@@ -47,6 +49,8 @@ const Map = () => {
 
     React.useEffect(() => {
         if (!map) return;
+
+        map.panTo(mapCenter);
 
         if (distance === -1) {
             circle && circle.setMap(null);
@@ -57,7 +61,9 @@ const Map = () => {
             circle.setMap(null);
         }
 
-        addCircle(map, mapCenter, distance);
+        setTimeout(() => {
+            addCircle(map, mapCenter, distance);
+        }, 100)
     }, [mapCenter, distance]);
 
     const dispatch = useDispatch();
@@ -100,7 +106,6 @@ const Map = () => {
                     lat: 50.463528,
                     lng: 30.5053546,
                 }}
-                center={mapCenter}
                 defaultZoom={14}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={handleApiLoaded}

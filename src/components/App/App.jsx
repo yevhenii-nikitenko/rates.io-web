@@ -4,7 +4,7 @@ import Map from '../Map/Map.jsx';
 import Grid from '@material-ui/core/Grid';
 import Header from '../Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import PlaceDetails from '../PlaceDetails/PlaceDetails';
+import ExchangersList from '../ExchangersList/ExchangersList';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
 import { setExchanges } from '../../store/actions';
 
@@ -14,11 +14,10 @@ const App = () => {
     const dispatch = useDispatch();
     const [autocompleteService, setAutocompleteService] = React.useState(null);
     const [placesService, setPlacesService] = React.useState(null);
-    const selectedExchanger = useSelector((state) => state.exchanges.selected);
-    const exchanges = useSelector((state) => state.exchanges.list);
     const currentCity = useSelector((state) => state.geo.currentCity);
 
     React.useEffect(() => {
+        // simulating load exchangers from db by provided currentCity.place_id
         currentCity &&
             dispatch(
                 setExchanges(
@@ -40,31 +39,12 @@ const App = () => {
         >
             <div className="app-root">
                 <Grid container>
-                    <Grid item xs={6} className="app-exchanges-main" style={{
-                        overflowY: 'scroll',
-                        height: '100vh'
-                    }}>
+                    <Grid item xs={5}>
                         <Header />
-                        {exchanges.map((exchange) => {
-                            return (
-                                <PlaceDetails
-                                    key={exchange.id}
-                                    exchanger={exchange}
-                                />
-                            );
-                        })}
-                        {selectedExchanger ? (
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <PlaceDetails
-                                        exchanger={selectedExchanger}
-                                    />
-                                </Grid>
-                            </Grid>
-                        ) : null}
+                        <ExchangersList />
                     </Grid>
-                    <Grid item xs={6}>
-                        <Map places={exchanges} />
+                    <Grid item xs={7}>
+                        <Map />
                     </Grid>
                 </Grid>
             </div>

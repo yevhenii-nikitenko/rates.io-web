@@ -1,13 +1,11 @@
 import { SET_MAP_CENTER, SET_CURRENT_CITY } from '../constants';
 
 const initialState = {
-    map: null, // google map object
-    maps: null, // google maps object
     mapCenter: null, // map center place { lat: '', lng: '' }
     currentCity: null, // current city { name: '', place_id: '' }
 };
 
-const mapReducer = (state = initialState, action) => {
+const geoReducer = (state = initialState, action) => {
     if (action.type === SET_MAP_CENTER) {
         /** set map center coordinates */
         return {
@@ -27,4 +25,4 @@ const mapReducer = (state = initialState, action) => {
     return state;
 };
 
-export default mapReducer;
+export default geoReducer;

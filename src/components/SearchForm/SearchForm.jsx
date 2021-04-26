@@ -7,26 +7,23 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
 
-import { operations } from '../../constants';
+import { operations, currencies, ANY_CURRENCY} from '../../constants';
+import { setSearchParams } from '../../store/actions';
 
 const SearchForm = () => {
+    const dispatch = useDispatch();
     const [operation, setOperation] = React.useState(operations.SELL);
-    const [currency, setCurrency] = React.useState('');
+    const [currency, setCurrency] = React.useState(ANY_CURRENCY);
     const [distance, setDistance] = React.useState(-1);
-    const [currencies, setCurrencies] = React.useState([
-        'usd',
-        'eur',
-        'tl',
-        'plz',
-        'cad',
-        'rub',
-    ]);
 
     const handleFind = () => {
-        console.log('currency', currency);
-        console.log('distance', distance);
-        console.log('operation', operation);
+        dispatch(setSearchParams({
+            currency,
+            distance,
+            operation
+        }));
     };
 
     return (
@@ -59,9 +56,10 @@ const SearchForm = () => {
                         onChange={(event) => setCurrency(event.target.value)}
                         label="Currency"
                     >
-                        {currencies.map((name, index) => (
-                            <MenuItem key={index} value={name}>
-                                {name}
+                        <MenuItem value={ANY_CURRENCY}>Any</MenuItem>
+                        {currencies.map((currency, index) => (
+                            <MenuItem key={index} value={currency.code}>
+                                {currency.symbol ? currency.symbol + ' ' : ''}{currency.name}
                             </MenuItem>
                         ))}
                     </Select>

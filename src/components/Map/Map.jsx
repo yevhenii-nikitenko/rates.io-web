@@ -6,26 +6,72 @@ import getCurrentLocation from '../../libs/getCurrentLocation';
 import { setCurrentCity, setMapCenter } from '../../store/actions';
 import StartingPoint from '../StartingPoint/StartingPoint.jsx';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
+import { events } from '../../constants';
 
-const Map = (props) => {
+const EXCHANGER_CARD_CLASS = '.exchanger-card';
+
+const Map = () => {
+    const [map, setMap] = React.useState(null);
+    const [circle, setCircle] = React.useState(null);
     const mapCenter = useSelector((state) => state.geo.mapCenter);
+    const { list } = useSelector((state) => state.exchanges);
+    const distance = useSelector((state) => state.search.distance);
+
     const { setAutocompleteService, setPlacesService } = React.useContext(
         GoogleMapsServicesContext,
     );
 
-    const dispatch = useDispatch();
-    const handleApiLoaded = ({ maps, map }) => {
-        setAutocompleteService(new maps.places.AutocompleteService());
-        setPlacesService(new maps.places.PlacesService(map));
+    const addCircle = (map, center, distance) => {
+        const circle = new window.google.maps.Circle({
+            strokeWeight: 0,
+            fillColor: '#2740f5',
+            fillOpacity: 0.2,
+            map,
+            center,
+            radius: 1000 * distance
+        });
 
-        map.addListener('click', (event) => {
-            const cardIsOpen = document.querySelector('.exchanger-card');
+        window.google.maps.event.addListener(circle, events.CLICK, (event) => {
+            window.google.maps.event.clearListeners(circle, events.CLICK);
+            window.google.maps.event.trigger(map, events.CLICK, event);
+
+            const cardIsOpen = document.querySelector(EXCHANGER_CARD_CLASS);
 
             if (cardIsOpen) return;
 
-            const latLng = event.latLng.toJSON();
+            circle.setMap(null);
+        });
 
-            dispatch(setMapCenter(latLng));
+        setCircle(circle);
+    }
+
+    React.useEffect(() => {
+        if (!map) return;
+
+        if (distance === -1) {
+            circle && circle.setMap(null);
+            return;
+        }
+
+        if (circle) {
+            circle.setMap(null);
+        }
+
+        addCircle(map, mapCenter, distance);
+    }, [mapCenter, distance]);
+
+    const dispatch = useDispatch();
+    const handleApiLoaded = ({ maps, map }) => {
+        setMap(map);
+        setAutocompleteService(new maps.places.AutocompleteService());
+        setPlacesService(new maps.places.PlacesService(map));
+
+        map.addListener(events.CLICK, (event) => {
+            const cardIsOpen = document.querySelector(EXCHANGER_CARD_CLASS);
+
+            if (cardIsOpen) return;
+
+            dispatch(setMapCenter(event.latLng.toJSON()));
         });
 
         getCurrentLocation(maps, (location) => {
@@ -47,8 +93,8 @@ const Map = (props) => {
         >
             <GoogleMap
                 bootstrapURLKeys={{
-                    key: 'AIzaSyBZni7SQo5eSmkaZVOFM_Q_xSz9LExDMUA',
-                    libraries: ['places'],
+                    key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                    libraries: ['places', 'geometry'],
                 }}
                 defaultCenter={{
                     lat: 50.463528,
@@ -59,7 +105,7 @@ const Map = (props) => {
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={handleApiLoaded}
             >
-                {props.places.map((place) => (
+                {list.map((place) => (
                     <Marker
                         key={place.id}
                         lat={place.lat}

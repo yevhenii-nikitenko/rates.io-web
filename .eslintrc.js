@@ -18,4 +18,7 @@ module.exports = {
         indent: ['warn', 4],
         'no-console': 'warn',
     },
+    globals: {
+        process: true
+    }
 };

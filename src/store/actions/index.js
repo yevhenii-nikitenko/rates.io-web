@@ -6,6 +6,8 @@ import {
     ADD_EXCHANGES,
     SET_EXCHANGES,
     CLEAR_EXCHANGES,
+    SET_SEARCH_PARAMS,
+    CLEAR_SEARCH_PARAMS
 } from '../constants';
 
 export const selectExchange = (payload) => {
@@ -52,6 +54,20 @@ export const setExchanges = (payload) => {
 export const clearExchanges = (payload) => {
     return {
         type: CLEAR_EXCHANGES,
+        payload,
+    };
+};
+
+export const clearSearchParams = (payload) => {
+    return {
+        type: CLEAR_SEARCH_PARAMS,
+        payload,
+    };
+};
+
+export const setSearchParams = (payload) => {
+    return {
+        type: SET_SEARCH_PARAMS,
         payload,
     };
 };

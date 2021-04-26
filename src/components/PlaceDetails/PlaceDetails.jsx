@@ -1,77 +1,75 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
-    root: {},
-    media: {
-        // height: 140,
-    },
-});
-
 const PlaceDetails = (props) => {
-    const classes = useStyles();
-
     return (
-        <Card className={classes.root}>
-            {/* <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        /> */}
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    {props.exchanger.name}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
+        <Card style={{
+            margin: '0px 10px', 
+            borderRadius: '0px',
+            borderBottom: '1px solid #282c34',
+            display: 'flex',
+            padding: '5px'
+        }}>
+            <CardMedia
+                image="https://img.budgettravel.com/_ampArticle/foreign-currency.jpg?mtime=20190709095321"
+                title="pic"
+                style={{
+                    width: '35%'
+                }}
+            />
+            <CardContent style={{
+                width: '60%'
+            }}>
+                <Typography style={{
+                    fontWeight: '500',
+                    fontSize: '16px',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden'
+                }}>
                     {props.exchanger.address}
                 </Typography>
-                <Grid container spacing={2}>
+                <Typography style={{
+                    fontSize: '12px'
+                }}>
+                    {props.exchanger.name}
+                </Typography>
+                <Typography style={{
+                    fontSize: '12px'
+                }}>
+                    {props.exchanger.phone}
+                </Typography>
+                <Grid container>
+                    <Grid
+                        container
+                        style={{ textAlign: 'center', margin: '4px 0px', padding: '4px' }}
+                    >
+                        <Grid item xs>Bid</Grid>
+                        <Grid item xs>currency</Grid>
+                        <Grid item xs>Ask</Grid>
+                    </Grid>
                     {Object.keys(props.exchanger.rates).map(
                         (currency, index) => (
                             <Grid
                                 container
                                 key={index}
-                                justify="center"
-                                spacing={2}
+                                style={{ textAlign: 'center', border: '1px solid #282c34', margin: '4px 0px', padding: '4px' }}
                             >
-                                <Grid item xs>
-                                    <Paper className="rate-row">
-                                        {props.exchanger.rates[currency].bid}
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs>
-                                    <Paper className="rate-row">
-                                        {currency}
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs>
-                                    <Paper className="rate-row">
-                                        {props.exchanger.rates[currency].ask}
-                                    </Paper>
-                                </Grid>
+                                <Grid item xs>{props.exchanger.rates[currency].bid}</Grid>
+                                <Grid item xs>{currency}</Grid>
+                                <Grid item xs>{props.exchanger.rates[currency].ask}</Grid>
                             </Grid>
                         ),
                     )}
                 </Grid>
+                <Typography>
+                    updated: {props.exchanger.lastUpdate || '16:50'}
+                </Typography>
             </CardContent>
-
-            <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
-            </CardActions>
         </Card>
     );
 };

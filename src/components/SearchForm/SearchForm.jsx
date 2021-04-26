@@ -28,7 +28,7 @@ const SearchForm = () => {
 
     return (
         <Grid container style={{ background: 'white' }}>
-            <Grid item xs={3} style={{ padding: 10, color: '#282c34' }}>
+            <Grid item xs={4} style={{ padding: 10, color: '#282c34', textAlign: 'center' }}>
                 <Typography display="inline">Buy</Typography>
                 <Switch
                     checked={operation === operations.SELL}
@@ -65,7 +65,7 @@ const SearchForm = () => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={3} style={{ padding: 10 }}>
+            <Grid item xs={2} style={{ padding: 10 }}>
                 <FormControl
                     variant="outlined"
                     style={{

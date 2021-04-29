@@ -6,20 +6,18 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import CurrencyForm from '../CurrencyForm/CurrencyForm';
+import CurrencyForm, { CurrencyFormMode } from '../CurrencyForm/CurrencyForm';
 import { currencies } from '../../constants';
 
 const PlaceDetails = (props) => {
     const [expanded, setExpanded] = React.useState(props.expanded);
 
     const getExchangerCurrencies = () => {
-        return Object
-            .keys(props.exchanger.rates)
-            .map(currency => {
-                const code = currency.toUpperCase();
+        return Object.keys(props.exchanger.rates).map((currency) => {
+            const code = currency.toUpperCase();
 
-                return currencies.find(c => c.code === code);
-            });
+            return currencies.find((c) => c.code === code);
+        });
     };
 
     return (
@@ -32,9 +30,11 @@ const PlaceDetails = (props) => {
                 boxShadow: 'none',
             }}
         >
-            <div style={{
-                display: 'flex',
-            }}>
+            <div
+                style={{
+                    display: 'flex',
+                }}
+            >
                 <CardMedia
                     style={{
                         width: '300px',
@@ -89,7 +89,7 @@ const PlaceDetails = (props) => {
                                 float: 'right',
                             }}
                         >
-                        updated: {props.exchanger.lastUpdate || '16:50'}
+                            updated: {props.exchanger.lastUpdate || '16:50'}
                         </Typography>
                         <Grid container>
                             <Grid
@@ -101,13 +101,13 @@ const PlaceDetails = (props) => {
                                 }}
                             >
                                 <Grid item xs>
-                                Bid
+                                    Bid
                                 </Grid>
                                 <Grid item xs>
-                                currency
+                                    currency
                                 </Grid>
                                 <Grid item xs>
-                                Ask
+                                    Ask
                                 </Grid>
                             </Grid>
                             {Object.keys(props.exchanger.rates).map(
@@ -123,52 +123,60 @@ const PlaceDetails = (props) => {
                                         }}
                                     >
                                         <Grid item xs>
-                                            {props.exchanger.rates[currency].bid}
+                                            {
+                                                props.exchanger.rates[currency]
+                                                    .bid
+                                            }
                                         </Grid>
                                         <Grid item xs>
                                             {currency}
                                         </Grid>
                                         <Grid item xs>
-                                            {props.exchanger.rates[currency].ask}
+                                            {
+                                                props.exchanger.rates[currency]
+                                                    .ask
+                                            }
                                         </Grid>
                                     </Grid>
                                 ),
                             )}
                         </Grid>
                     </CardContent>
-                    <div>
-                        <CardActions>
-                            {expanded ? null : (
-                                <Button
-                                    size="small"
-                                    style={{
-                                        width: '100%',
-                                        background: '#282c34',
-                                        color: 'white',
-                                    }}
-                                    onClick={() => {
-                                        setExpanded(true);
-                                    }}
-                                >
+                    <CardActions
+                        style={{
+                            display: 'initial',
+                        }}
+                    >
+                        {expanded ? null : (
+                            <Button
+                                size="small"
+                                style={{
+                                    float: 'right',
+                                    background: '#282c34',
+                                    color: 'white',
+                                }}
+                                onClick={() => {
+                                    setExpanded(true);
+                                }}
+                            >
                                 More
-                                </Button>
-                            )}
-                        </CardActions>
-                    </div>
+                            </Button>
+                        )}
+                    </CardActions>
                 </div>
             </div>
-            {expanded ? 
+            {expanded ? (
                 <div>
                     <CardActions>
-                        <CurrencyForm 
-                            mode={'CALC'} 
+                        <CurrencyForm
+                            mode={CurrencyFormMode.CALC}
                             currencies={getExchangerCurrencies()}
-                            rates={props.exchanger.rates} />
+                            rates={props.exchanger.rates}
+                        />
                     </CardActions>
                     <Button
                         size="small"
                         style={{
-                            width: 'calc(100% - 310px)',
                             margin: '0px 8px',
                             background: '#282c34',
                             float: 'right',
@@ -177,10 +185,11 @@ const PlaceDetails = (props) => {
                         onClick={() => {
                             setExpanded(false);
                         }}
-                    >Less</Button>
+                    >
+                        Less
+                    </Button>
                 </div>
-                :
-                null}
+            ) : null}
         </Card>
     );
 };

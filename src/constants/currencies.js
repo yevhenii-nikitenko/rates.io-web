@@ -34,8 +34,8 @@ export default [
         symbol: '₪'
     },
     {
-        code: 'CAD',
-        name: 'Canadian Dollar',
+        code: 'USD',
+        name: 'US Dollar',
         symbol: '$'
     },
     {

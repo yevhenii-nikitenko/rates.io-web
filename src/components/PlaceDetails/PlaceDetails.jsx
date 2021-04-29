@@ -7,9 +7,20 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CurrencyForm from '../CurrencyForm/CurrencyForm';
+import { currencies } from '../../constants';
 
 const PlaceDetails = (props) => {
     const [expanded, setExpanded] = React.useState(props.expanded);
+
+    const getExchangerCurrencies = () => {
+        return Object
+            .keys(props.exchanger.rates)
+            .map(currency => {
+                const code = currency.toUpperCase();
+
+                return currencies.find(c => c.code === code);
+            });
+    };
 
     return (
         <Card
@@ -149,12 +160,16 @@ const PlaceDetails = (props) => {
             {expanded ? 
                 <div>
                     <CardActions>
-                        <CurrencyForm mode={'CALC'} />
+                        <CurrencyForm 
+                            mode={'CALC'} 
+                            currencies={getExchangerCurrencies()}
+                            rates={props.exchanger.rates} />
                     </CardActions>
                     <Button
                         size="small"
                         style={{
                             width: 'calc(100% - 310px)',
+                            margin: '0px 8px',
                             background: '#282c34',
                             float: 'right',
                             color: 'white',

@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { RiExchangeDollarLine } from 'react-icons/ri';
 import CurrencyForm from '../CurrencyForm/CurrencyForm';
 import LocationPicker from '../LocationPicker/LocationPicker';
+import { currencies } from '../../constants';
 
 const Header = () => {
     return (
@@ -22,7 +23,7 @@ const Header = () => {
                     </Grid>
                 </Grid>
             </Toolbar>
-            <CurrencyForm mode={'SEARCH'} />
+            <CurrencyForm mode={'SEARCH'} currencies={currencies} />
         </AppBar>
     );
 };

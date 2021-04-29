@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch } from 'react-redux';
 
-import { operations, currencies, ANY_CURRENCY} from '../../constants';
+import { operations, ANY_CURRENCY} from '../../constants';
 import { setSearchParams } from '../../store/actions';
 
 const CurrencyForm = (props) => {
@@ -28,6 +28,18 @@ const CurrencyForm = (props) => {
             operation
         }));
     };
+
+    const calculate = (_currency, _operation, _amount, _total) => {
+        console.log('currency', currency);
+        console.log('operation', operation);
+        console.log('amount', amount);
+
+        console.log('total', total);
+    };
+
+    React.useEffect(() => {
+        console.log('total555', total);
+    }, [total])
 
     return (
         <Grid container style={{ background: 'white' }}>
@@ -63,7 +75,7 @@ const CurrencyForm = (props) => {
                         label="Currency"
                     >
                         <MenuItem value={ANY_CURRENCY}>Any</MenuItem>
-                        {currencies.map((currency, index) => (
+                        {props.currencies.map((currency, index) => (
                             <MenuItem key={index} value={currency}>
                                 {currency.symbol ? currency.symbol + ' ' : ''}{currency.name} ({currency.code})
                             </MenuItem>
@@ -101,7 +113,8 @@ const CurrencyForm = (props) => {
                         type="number"
                         value={amount}
                         onChange={event => {
-                            setAmount(event.target.value)
+                            setAmount(event.target.value);
+                            calculate();
                         }}
                         inputProps={{
                             style: {
@@ -140,7 +153,7 @@ const CurrencyForm = (props) => {
                             type="number"
                             value={total}
                             onChange={event => {
-                                setTotal(event.target.value)
+                                setTotal(event.target.value);
                             }}
                             inputProps={{
                                 style: {

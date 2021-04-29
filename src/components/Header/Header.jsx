@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import { RiExchangeDollarLine } from 'react-icons/ri';
-import SearchForm from '../SearchForm/SearchForm';
+import CurrencyForm from '../CurrencyForm/CurrencyForm';
 import LocationPicker from '../LocationPicker/LocationPicker';
 
 const Header = () => {
@@ -22,7 +22,7 @@ const Header = () => {
                     </Grid>
                 </Grid>
             </Toolbar>
-            <SearchForm />
+            <CurrencyForm mode={'SEARCH'} />
         </AppBar>
     );
 };

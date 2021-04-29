@@ -7,14 +7,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { useDispatch } from 'react-redux';
 
 import { operations, currencies, ANY_CURRENCY} from '../../constants';
 import { setSearchParams } from '../../store/actions';
 
-const SearchForm = () => {
+const CurrencyForm = (props) => {
     const dispatch = useDispatch();
     const [operation, setOperation] = React.useState(operations.SELL);
+    const [amount, setAmount] = React.useState(0);
+    const [total, setTotal] = React.useState(0);
     const [currency, setCurrency] = React.useState(ANY_CURRENCY);
     const [distance, setDistance] = React.useState(-1);
 
@@ -28,7 +31,10 @@ const SearchForm = () => {
 
     return (
         <Grid container style={{ background: 'white' }}>
-            <Grid item xs={4} style={{ padding: 10, color: '#282c34', textAlign: 'center' }}>
+            <Grid 
+                item 
+                xs={ props.mode === 'SEARCH' ? 4 : 3} 
+                style={{ padding: 10, color: '#282c34', textAlign: 'center' }}>
                 <Typography display="inline">Buy</Typography>
                 <Switch
                     checked={operation === operations.SELL}
@@ -65,8 +71,11 @@ const SearchForm = () => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={2} style={{ padding: 10 }}>
-                <FormControl
+            <Grid 
+                item 
+                xs={ props.mode === 'SEARCH' ? 2 : 3} 
+                style={{ padding: 10 }}>
+                {props.mode === 'SEARCH' ? <FormControl
                     variant="outlined"
                     style={{
                         width: '100%',
@@ -84,23 +93,69 @@ const SearchForm = () => {
                         <MenuItem value={2}>2</MenuItem>
                         <MenuItem value={3}>3</MenuItem>
                     </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={3} style={{ padding: 10 }}>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    style={{
-                        width: '100%',
-                        background: '#282c34',
-                    }}
-                    onClick={handleFind}
+                </FormControl> : <FormControl
+                    variant="outlined"
                 >
-                    Find
-                </Button>
+                    <TextField
+                        label="Amount"
+                        type="number"
+                        value={amount}
+                        onChange={event => {
+                            setAmount(event.target.value)
+                        }}
+                        inputProps={{
+                            style: {
+                                padding: 10
+                            }
+                        }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
+                </FormControl>}
             </Grid>
+            {props.mode === 'SEARCH' ? 
+                <Grid item xs={3} style={{ padding: 10 }}>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        style={{
+                            width: '100%',
+                            background: '#282c34',
+                        }}
+                        onClick={handleFind}
+                    >
+                    Find
+                    </Button>
+                </Grid> : <Grid 
+                    item 
+                    xs={3}                 
+                    style={{ padding: 10 }}>
+                    <FormControl
+                        variant="outlined"
+                    >
+                        <TextField
+                            label="Total"
+                            type="number"
+                            value={total}
+                            onChange={event => {
+                                setTotal(event.target.value)
+                            }}
+                            inputProps={{
+                                style: {
+                                    padding: 10
+                                }
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </FormControl>
+                </Grid>}
         </Grid>
     );
 };
 
-export default SearchForm;
+export default CurrencyForm;

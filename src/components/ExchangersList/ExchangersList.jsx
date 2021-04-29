@@ -25,6 +25,7 @@ const ExchangersList = () => {
                     <Grid item xs={12}>
                         <PlaceDetails
                             exchanger={selected}
+                            expanded={true}
                         />
                     </Grid>
                 </Grid> 

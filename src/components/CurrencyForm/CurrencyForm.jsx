@@ -20,7 +20,7 @@ const CurrencyFormMode = {
 
 const CurrencyForm = (props) => {
     const dispatch = useDispatch();
-    const [operation, setOperation] = React.useState(operations.SELL);
+    const [operation, setOperation] = React.useState(operations.BUY);
     const [amount, setAmount] = React.useState('');
     const [total, setTotal] = React.useState('');
     const [currency, setCurrency] = React.useState(ANY_CURRENCY);
@@ -52,25 +52,6 @@ const CurrencyForm = (props) => {
 
     return (
         <Grid container style={{ background: 'white' }}>
-            <Grid
-                item
-                xs={props.mode === CurrencyFormMode.SEARCH ? 4 : 3}
-                style={{ padding: 10, color: '#282c34', textAlign: 'center' }}
-            >
-                <Typography display="inline">Buy</Typography>
-                <Switch
-                    checked={operation === operations.SELL}
-                    color="default"
-                    onChange={() => {
-                        setOperation(
-                            operation === operations.SELL
-                                ? operations.BUY
-                                : operations.SELL,
-                        );
-                    }}
-                />
-                <Typography display="inline">Sell</Typography>
-            </Grid>
             <Grid item xs={3} style={{ padding: 10 }}>
                 <FormControl
                     variant="outlined"
@@ -95,6 +76,39 @@ const CurrencyForm = (props) => {
                         ))}
                     </Select>
                 </FormControl>
+            </Grid>
+            <Grid
+                item
+                xs={props.mode === CurrencyFormMode.SEARCH ? 4 : 3}
+                style={{
+                    padding: 10,
+                    color: '#282c34',
+                    justifyContent: 'center',
+                    display: 'inline-flex',
+                }}
+            >
+                <Typography
+                    style={{ alignItems: 'center', display: 'inline-flex' }}
+                >
+                    Buy
+                </Typography>
+                <Switch
+                    checked={operation === operations.SELL}
+                    color="default"
+                    disabled={currency === ANY_CURRENCY}
+                    onChange={() => {
+                        setOperation(
+                            operation === operations.SELL
+                                ? operations.BUY
+                                : operations.SELL,
+                        );
+                    }}
+                />
+                <Typography
+                    style={{ alignItems: 'center', display: 'inline-flex' }}
+                >
+                    Sell
+                </Typography>
             </Grid>
             <Grid
                 item
@@ -188,4 +202,5 @@ const CurrencyForm = (props) => {
 };
 
 export default CurrencyForm;
+
 export { CurrencyFormMode };

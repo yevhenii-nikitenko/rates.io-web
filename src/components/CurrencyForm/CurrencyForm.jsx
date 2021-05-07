@@ -85,6 +85,7 @@ const CurrencyForm = (props) => {
                     color: '#282c34',
                     justifyContent: 'center',
                     display: 'inline-flex',
+                    opacity: currency === ANY_CURRENCY ? 0.5 : 1,
                 }}
             >
                 <Typography

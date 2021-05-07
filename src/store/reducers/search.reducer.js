@@ -1,10 +1,10 @@
 import { SET_SEARCH_PARAMS, CLEAR_SEARCH_PARAMS } from '../constants';
-import { operations, currencies } from '../../constants';
+import { operations, ANY_CURRENCY } from '../../constants';
 
 const initialState = {
     operation: operations.SELL,
-    currency: currencies.ANY_CURRENCY, 
-    distance: -1, 
+    currency: ANY_CURRENCY,
+    distance: -1,
 };
 
 const searchReducer = (state = initialState, action) => {

@@ -91,10 +91,10 @@ const CurrencyForm = (props) => {
                 <Typography
                     style={{ alignItems: 'center', display: 'inline-flex' }}
                 >
-                    Buy
+                    Sell
                 </Typography>
                 <Switch
-                    checked={operation === operations.SELL}
+                    checked={operation === operations.BUY}
                     color="default"
                     disabled={currency === ANY_CURRENCY}
                     onChange={() => {
@@ -108,7 +108,7 @@ const CurrencyForm = (props) => {
                 <Typography
                     style={{ alignItems: 'center', display: 'inline-flex' }}
                 >
-                    Sell
+                    Buy
                 </Typography>
             </Grid>
             <Grid

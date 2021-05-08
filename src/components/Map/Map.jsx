@@ -14,7 +14,7 @@ const Map = () => {
     const [map, setMap] = React.useState(null);
     const [circle, setCircle] = React.useState(null);
     const mapCenter = useSelector((state) => state.geo.mapCenter);
-    const { list } = useSelector((state) => state.exchanges);
+    const { list, hovered } = useSelector((state) => state.exchanges);
     const distance = useSelector((state) => state.search.distance);
 
     const { setAutocompleteService, setPlacesService } = React.useContext(
@@ -28,7 +28,7 @@ const Map = () => {
             fillOpacity: 0.2,
             map,
             center,
-            radius: 1000 * distance
+            radius: 1000 * distance,
         });
 
         window.google.maps.event.addListener(circle, events.CLICK, (event) => {
@@ -45,7 +45,7 @@ const Map = () => {
         });
 
         setCircle(circle);
-    }
+    };
 
     React.useEffect(() => {
         if (!map) return;
@@ -63,7 +63,7 @@ const Map = () => {
 
         setTimeout(() => {
             addCircle(map, mapCenter, distance);
-        }, 100)
+        }, 100);
     }, [mapCenter, distance]);
 
     const dispatch = useDispatch();
@@ -116,6 +116,7 @@ const Map = () => {
                         lat={place.lat}
                         lng={place.lng}
                         place={place}
+                        pulsate={place === hovered}
                     />
                 ))}
                 {mapCenter ? (

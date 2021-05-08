@@ -7,7 +7,9 @@ import {
     SET_EXCHANGES,
     CLEAR_EXCHANGES,
     SET_SEARCH_PARAMS,
-    CLEAR_SEARCH_PARAMS
+    CLEAR_SEARCH_PARAMS,
+    SET_ON_MOUSEOVER,
+    CLEAR_ON_MOUSELEAVE,
 } from '../constants';
 
 export const selectExchange = (payload) => {
@@ -72,3 +74,15 @@ export const setSearchParams = (payload) => {
     };
 };
 
+export const cleatOnMouseLeave = () => {
+    return {
+        type: CLEAR_ON_MOUSELEAVE,
+    };
+};
+
+export const setOnMouseOver = (payload) => {
+    return {
+        type: SET_ON_MOUSEOVER,
+        payload,
+    };
+};

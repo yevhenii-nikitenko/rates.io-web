@@ -1,17 +1,26 @@
 import React from 'react';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import Grid from '@material-ui/core/Grid';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import getDistanceBetweenPoints from '../../libs/getDistanceBetweenPoints';
 import AvarageRate from '../AvarageRate/AvarageRate';
 import { operations, ANY_CURRENCY } from '../../constants';
+import { setOnMouseOver, cleatOnMouseLeave } from '../../store/actions';
 
 const ExchangersList = () => {
+    const dispatch = useDispatch();
     const { selected, list } = useSelector((state) => state.exchanges);
     const { operation, currency, distance } = useSelector(
         (state) => state.search,
     );
     const mapCenter = useSelector((state) => state.geo.mapCenter);
+
+    const mouseLeaveHandler = () => {
+        dispatch(cleatOnMouseLeave());
+    };
+    const mouseEnterHandler = (exchange) => {
+        dispatch(setOnMouseOver(exchange));
+    };
 
     const center =
         mapCenter &&
@@ -87,6 +96,10 @@ const ExchangersList = () => {
                             exchanger={exchange}
                             operation={operation}
                             currency={currency}
+                            mouseLeaveHandler={mouseLeaveHandler}
+                            mouseEnterHandler={() =>
+                                mouseEnterHandler(exchange)
+                            }
                         />
                     );
                 })

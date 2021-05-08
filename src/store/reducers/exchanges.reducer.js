@@ -4,10 +4,13 @@ import {
     ADD_EXCHANGES,
     CLEAR_EXCHANGES,
     SET_EXCHANGES,
+    SET_ON_MOUSEOVER,
+    CLEAR_ON_MOUSELEAVE,
 } from '../constants';
 
 const initialState = {
     selected: null, // selected exchanger
+    hovered: null, //hovered exchanger
     list: [], // list of loaded exchangers
 };
 
@@ -30,6 +33,14 @@ const exchangesReducer = (state = initialState, action) => {
 
     if (action.type === CLEAR_EXCHANGES) {
         return { ...state, list: [] };
+    }
+
+    if (action.type === CLEAR_ON_MOUSELEAVE) {
+        return { ...state, hovered: null };
+    }
+
+    if (action.type === SET_ON_MOUSEOVER) {
+        return { ...state, hovered: action.payload };
     }
 
     return state;

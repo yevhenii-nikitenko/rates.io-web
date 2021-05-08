@@ -41,10 +41,12 @@ const CurrencyForm = (props) => {
     };
 
     React.useEffect(() => {
+        if (!props.operation) return;
         setOperation(props.operation);
     }, [props.operation]);
 
     React.useEffect(() => {
+        if (!props.currency) return;
         setCurrency(props.currency);
     }, [props.currency]);
 

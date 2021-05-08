@@ -29,6 +29,8 @@ const PlaceDetails = (props) => {
                 padding: '10px',
                 boxShadow: 'none',
             }}
+            onMouseEnter={props.mouseEnterHandler}
+            onMouseLeave={props.mouseLeaveHandler}
         >
             <div
                 style={{

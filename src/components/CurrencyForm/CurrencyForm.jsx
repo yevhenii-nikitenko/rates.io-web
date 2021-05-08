@@ -20,10 +20,14 @@ const CurrencyFormMode = {
 
 const CurrencyForm = (props) => {
     const dispatch = useDispatch();
-    const [operation, setOperation] = React.useState(operations.BUY);
+    const [operation, setOperation] = React.useState(
+        props.operation || operations.BUY,
+    );
     const [amount, setAmount] = React.useState('');
     const [total, setTotal] = React.useState('');
-    const [currency, setCurrency] = React.useState(ANY_CURRENCY);
+    const [currency, setCurrency] = React.useState(
+        props.currency || ANY_CURRENCY,
+    );
     const [distance, setDistance] = React.useState(-1);
 
     const handleFind = () => {
@@ -37,6 +41,15 @@ const CurrencyForm = (props) => {
     };
 
     React.useEffect(() => {
+        setOperation(props.operation);
+    }, [props.operation]);
+
+    React.useEffect(() => {
+        setCurrency(props.currency);
+    }, [props.currency]);
+
+    // calculation
+    React.useEffect(() => {
         if (props.rates && currency !== ANY_CURRENCY && +amount) {
             const { bid, ask, count } = props.rates[
                 currency.code.toLowerCase()
@@ -47,6 +60,11 @@ const CurrencyForm = (props) => {
             } else {
                 setTotal((+amount * (bid / count)).toFixed(2));
             }
+        }
+
+        if (currency === ANY_CURRENCY) {
+            setTotal('');
+            setAmount('');
         }
     }, [currency, amount, operation]);
 
@@ -143,6 +161,7 @@ const CurrencyForm = (props) => {
                         <TextField
                             label="Amount"
                             type="number"
+                            disabled={currency === ANY_CURRENCY}
                             value={amount}
                             onChange={(event) => {
                                 setAmount(event.target.value);

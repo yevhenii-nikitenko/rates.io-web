@@ -82,7 +82,12 @@ const ExchangersList = () => {
             ) : (
                 filteredList.map((exchange) => {
                     return (
-                        <PlaceDetails key={exchange.id} exchanger={exchange} />
+                        <PlaceDetails
+                            key={exchange.id}
+                            exchanger={exchange}
+                            operation={operation}
+                            currency={currency}
+                        />
                     );
                 })
             )}

@@ -172,6 +172,8 @@ const PlaceDetails = (props) => {
                             mode={CurrencyFormMode.CALC}
                             currencies={getExchangerCurrencies()}
                             rates={props.exchanger.rates}
+                            operation={props.operation}
+                            currency={props.currency}
                         />
                     </CardActions>
                     <Button

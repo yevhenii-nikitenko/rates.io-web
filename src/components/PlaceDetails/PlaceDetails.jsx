@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CurrencyForm, { CurrencyFormMode } from '../CurrencyForm/CurrencyForm';
-import { currencies } from '../../constants';
+import { currencies, ANY_CURRENCY } from '../../constants';
 
 const PlaceDetails = (props) => {
     const [expanded, setExpanded] = React.useState(props.expanded);
@@ -19,6 +19,25 @@ const PlaceDetails = (props) => {
             return currencies.find((c) => c.code === code);
         });
     };
+
+    const getRates = () => {
+        if (props.currency !== ANY_CURRENCY) {
+            return Object.entries(props.exchanger.rates).reduce(
+                (acc, element) => {
+                    if (element[0] === props.currency.code.toLowerCase()) {
+                        return [element, ...acc];
+                    }
+
+                    return [...acc, element];
+                },
+                [],
+            );
+        } else {
+            return Object.entries(props.exchanger.rates);
+        }
+    };
+
+    console.log(getRates());
 
     return (
         <Card
@@ -112,36 +131,29 @@ const PlaceDetails = (props) => {
                                     Ask
                                 </Grid>
                             </Grid>
-                            {Object.keys(props.exchanger.rates).map(
-                                (currency, index) => (
-                                    <Grid
-                                        container
-                                        key={index}
-                                        style={{
-                                            textAlign: 'center',
-                                            border: '1px solid #adadad',
-                                            margin: '4px 0px',
-                                            padding: '4px',
-                                        }}
-                                    >
-                                        <Grid item xs>
-                                            {
-                                                props.exchanger.rates[currency]
-                                                    .bid
-                                            }
-                                        </Grid>
-                                        <Grid item xs>
-                                            {currency}
-                                        </Grid>
-                                        <Grid item xs>
-                                            {
-                                                props.exchanger.rates[currency]
-                                                    .ask
-                                            }
-                                        </Grid>
+
+                            {getRates().map((currency, index) => (
+                                <Grid
+                                    container
+                                    key={index}
+                                    style={{
+                                        textAlign: 'center',
+                                        border: '1px solid #adadad',
+                                        margin: '4px 0px',
+                                        padding: '4px',
+                                    }}
+                                >
+                                    <Grid item xs>
+                                        {currency[1].bid}
                                     </Grid>
-                                ),
-                            )}
+                                    <Grid item xs>
+                                        {currency[0]}
+                                    </Grid>
+                                    <Grid item xs>
+                                        {currency[1].ask}
+                                    </Grid>
+                                </Grid>
+                            ))}
                         </Grid>
                     </CardContent>
                     <CardActions

@@ -110,7 +110,7 @@ const LocationPicker = () => {
                 (res, st) => {
                     dispatch(
                         setCurrentCity({
-                            name: res.name,
+                            name: newValue.description,
                             place_id: res.place_id,
                         }),
                     );

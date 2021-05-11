@@ -29,7 +29,7 @@ const Marker = (props) => {
     return (
         <ClickAwayListener onClickAway={open ? handleClickAway : () => {}}>
             <div>
-                <Pin handleClick={handleClick} pulsate={props.pulsate} />
+                <Pin handleClick={handleClick} pulsate={props.pulsate || open} />
                 {open ? <Popup place={props.place} /> : null}
             </div>
         </ClickAwayListener>

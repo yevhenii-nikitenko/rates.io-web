@@ -219,6 +219,28 @@ const CurrencyForm = (props) => {
                     </FormControl>
                 </Grid>
             )}
+            <Grid container style={{ background: 'white' }}>
+                <Grid item xs={12} style={{ padding: 10 }}>
+                    <FormControl
+                        variant="outlined"
+                        style={{
+                            width: '100%',
+                        }}
+                    >
+                        <InputLabel>Sort by</InputLabel>
+                        <Select
+                            value={currency}
+                            onChange={(event) => {
+                                setCurrency(event.target.value);
+                            }}
+                            label="Sort by"
+                        >
+                            <MenuItem value={'PRICE'}>Краща ціна</MenuItem>
+                            <MenuItem value={'DISTANCE'}>Відстань</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+            </Grid>
         </Grid>
     );
 };

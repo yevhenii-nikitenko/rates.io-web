@@ -9,6 +9,7 @@ export default [
         phone: '+380996660616',
         image: '',
         lastUpdate: '',
+        baseCurrency: 'UAH',
         rates: {
             usd: {
                 count: 1,
@@ -37,6 +38,7 @@ export default [
         phone: '+380996660617',
         image: '',
         lastUpdate: '',
+        baseCurrency: 'UAH',
         rates: {
             usd: {
                 count: 1,
@@ -64,6 +66,7 @@ export default [
         address: 'Maidan',
         phone: '+380996660600',
         image: '',
+        baseCurrency: 'UAH',
         lastUpdate: '',
         rates: {
             usd: {
@@ -93,6 +96,7 @@ export default [
         phone: '+380996699999',
         image: '',
         lastUpdate: '',
+        baseCurrency: 'UAH',
         rates: {
             usd: {
                 count: 1,
@@ -121,6 +125,7 @@ export default [
         phone: '+380996660000',
         image: '',
         lastUpdate: '',
+        baseCurrency: 'UAH',
         rates: {
             usd: {
                 count: 1,
@@ -149,6 +154,7 @@ export default [
         phone: '+380996566672',
         image: '',
         lastUpdate: '',
+        baseCurrency: 'UAH',
         rates: {
             usd: {
                 count: 1,

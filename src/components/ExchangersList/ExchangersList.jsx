@@ -4,13 +4,14 @@ import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import getDistanceBetweenPoints from '../../libs/getDistanceBetweenPoints';
 import AvarageRate from '../AvarageRate/AvarageRate';
-import { operations, ANY_CURRENCY } from '../../constants';
+import { operations, ANY_CURRENCY, sortBy as SORT_BY } from '../../constants';
 import { setOnMouseOver, cleatOnMouseLeave } from '../../store/actions';
+import sortComparator from '../../libs/sortComparator';
 
 const ExchangersList = () => {
     const dispatch = useDispatch();
     const { selected, list } = useSelector((state) => state.exchanges);
-    const { operation, currency, distance } = useSelector(
+    const { operation, currency, distance, sortBy, openNow } = useSelector(
         (state) => state.search,
     );
     const mapCenter = useSelector((state) => state.geo.mapCenter);
@@ -39,17 +40,28 @@ const ExchangersList = () => {
                 return place;
             }
         })
+        // add openNow filter
         .filter((exchange) => {
             if (!currency.code) return true;
 
-            return exchange.rates[currency.code.toLowerCase()];
+            return exchange.rates[currency.code];
         });
+
+    const sorted = !currency.code
+        ? filteredList
+        : filteredList.sort(
+              sortComparator({
+                  code: currency.code,
+                  sortBy,
+                  operation,
+                  center,
+              }),
+          );
 
     const avarage =
         currency !== ANY_CURRENCY &&
         filteredList.reduce((acc, exchange) => {
-            const selectedCurrency =
-                exchange.rates[currency.code.toLowerCase()];
+            const selectedCurrency = exchange.rates[currency.code];
 
             if (!selectedCurrency) return acc;
 
@@ -72,7 +84,7 @@ const ExchangersList = () => {
             className="app-exchanges-main"
             style={{
                 overflowY: 'scroll',
-                height: 'calc(100vh - 123px)',
+                height: 'calc(100vh - 182px)',
             }}
         >
             {showAvarage ? (
@@ -85,11 +97,16 @@ const ExchangersList = () => {
             {selected ? (
                 <Grid container>
                     <Grid item xs={12}>
-                        <PlaceDetails exchanger={selected} expanded={true} />
+                        <PlaceDetails
+                            exchanger={selected}
+                            operation={operation}
+                            currency={currency}
+                            expanded={true}
+                        />
                     </Grid>
                 </Grid>
             ) : (
-                filteredList.map((exchange) => {
+                sorted.map((exchange) => {
                     return (
                         <PlaceDetails
                             key={exchange.id}

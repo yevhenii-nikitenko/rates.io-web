@@ -23,7 +23,7 @@ const Header = () => {
                     </Grid>
                 </Grid>
             </Toolbar>
-            <CurrencyForm mode={'SEARCH'} currencies={currencies} />
+            <CurrencyForm currencies={currencies} />
         </AppBar>
     );
 };

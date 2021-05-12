@@ -154,7 +154,7 @@ const LocationPicker = () => {
             renderInput={(params) => (
                 <CssTextField
                     {...params}
-                    label="Add a location"
+                    label="Місто"
                     variant="outlined"
                     fullWidth
                 />

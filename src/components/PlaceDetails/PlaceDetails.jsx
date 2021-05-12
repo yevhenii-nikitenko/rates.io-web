@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import CurrencyForm, { CurrencyFormMode } from '../CurrencyForm/CurrencyForm';
+import Calculator from '../Calculator/Calculator';
 import { currencies, ANY_CURRENCY } from '../../constants';
 
 const PlaceDetails = (props) => {
@@ -14,9 +14,7 @@ const PlaceDetails = (props) => {
 
     const getExchangerCurrencies = () => {
         return Object.keys(props.exchanger.rates).map((currency) => {
-            const code = currency.toUpperCase();
-
-            return currencies.find((c) => c.code === code);
+            return currencies.find((c) => c.code === currency);
         });
     };
 
@@ -24,7 +22,7 @@ const PlaceDetails = (props) => {
         if (props.currency !== ANY_CURRENCY) {
             return Object.entries(props.exchanger.rates).reduce(
                 (acc, element) => {
-                    if (element[0] === props.currency.code.toLowerCase()) {
+                    if (element[0] === props.currency.code) {
                         return [element, ...acc];
                     }
 
@@ -36,8 +34,6 @@ const PlaceDetails = (props) => {
             return Object.entries(props.exchanger.rates);
         }
     };
-
-    console.log(getRates());
 
     return (
         <Card
@@ -122,13 +118,13 @@ const PlaceDetails = (props) => {
                                 }}
                             >
                                 <Grid item xs>
-                                    Bid
+                                    Продаж
                                 </Grid>
                                 <Grid item xs>
-                                    currency
+                                    Валюта
                                 </Grid>
                                 <Grid item xs>
-                                    Ask
+                                    Купівля
                                 </Grid>
                             </Grid>
 
@@ -173,7 +169,7 @@ const PlaceDetails = (props) => {
                                     setExpanded(true);
                                 }}
                             >
-                                More
+                                Більше
                             </Button>
                         )}
                     </CardActions>
@@ -182,8 +178,7 @@ const PlaceDetails = (props) => {
             {expanded ? (
                 <div>
                     <CardActions>
-                        <CurrencyForm
-                            mode={CurrencyFormMode.CALC}
+                        <Calculator
                             currencies={getExchangerCurrencies()}
                             rates={props.exchanger.rates}
                             operation={props.operation}
@@ -202,7 +197,7 @@ const PlaceDetails = (props) => {
                             setExpanded(false);
                         }}
                     >
-                        Less
+                        Сховати
                     </Button>
                 </div>
             ) : null}

@@ -1,0 +1,7 @@
+export default {
+    PRICE_ASC: 'PRICE_ASC',
+    PRICE_DESC: 'PRICE_DESC',
+    DISTANCE_ASC: 'DISTANCE_ASC',
+    DISTANCE_DESC: 'DISTANCE_DESC',
+    NO_SORT: 'NO_SORT',
+};

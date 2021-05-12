@@ -7,28 +7,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { useDispatch } from 'react-redux';
 
-import { operations, ANY_CURRENCY } from '../../constants';
+import { operations, ANY_CURRENCY, sortBy as SORT_BY } from '../../constants';
 import { setSearchParams } from '../../store/actions';
-
-const CurrencyFormMode = {
-    SEARCH: 'SEARCH',
-    CALC: 'CALC',
-};
 
 const CurrencyForm = (props) => {
     const dispatch = useDispatch();
-    const [operation, setOperation] = React.useState(
-        props.operation || operations.BUY,
-    );
-    const [amount, setAmount] = React.useState('');
-    const [total, setTotal] = React.useState('');
-    const [currency, setCurrency] = React.useState(
-        props.currency || ANY_CURRENCY,
-    );
+    const [operation, setOperation] = React.useState(operations.BUY);
+    const [currency, setCurrency] = React.useState(ANY_CURRENCY);
     const [distance, setDistance] = React.useState(-1);
+    const [sortBy, setSortBy] = React.useState(SORT_BY.NO_SORT);
+    const [openNow, setOpenNow] = React.useState(false);
 
     const handleFind = () => {
         dispatch(
@@ -36,39 +26,11 @@ const CurrencyForm = (props) => {
                 currency,
                 distance,
                 operation,
+                sortBy,
+                openNow,
             }),
         );
     };
-
-    React.useEffect(() => {
-        if (!props.operation) return;
-        setOperation(props.operation);
-    }, [props.operation]);
-
-    React.useEffect(() => {
-        if (!props.currency) return;
-        setCurrency(props.currency);
-    }, [props.currency]);
-
-    // calculation
-    React.useEffect(() => {
-        if (props.rates && currency !== ANY_CURRENCY && +amount) {
-            const { bid, ask, count } = props.rates[
-                currency.code.toLowerCase()
-            ];
-
-            if (operation === operations.BUY) {
-                setTotal((+amount * (ask / count)).toFixed(2));
-            } else {
-                setTotal((+amount * (bid / count)).toFixed(2));
-            }
-        }
-
-        if (currency === ANY_CURRENCY) {
-            setTotal('');
-            setAmount('');
-        }
-    }, [currency, amount, operation]);
 
     return (
         <Grid container style={{ background: 'white' }}>
@@ -79,7 +41,7 @@ const CurrencyForm = (props) => {
                         width: '100%',
                     }}
                 >
-                    <InputLabel>Currency</InputLabel>
+                    <InputLabel>Валюта</InputLabel>
                     <Select
                         value={currency}
                         onChange={(event) => {
@@ -99,7 +61,7 @@ const CurrencyForm = (props) => {
             </Grid>
             <Grid
                 item
-                xs={props.mode === CurrencyFormMode.SEARCH ? 4 : 3}
+                xs={4}
                 style={{
                     padding: 10,
                     color: '#282c34',
@@ -111,7 +73,7 @@ const CurrencyForm = (props) => {
                 <Typography
                     style={{ alignItems: 'center', display: 'inline-flex' }}
                 >
-                    Sell
+                    Продаж
                 </Typography>
                 <Switch
                     checked={operation === operations.BUY}
@@ -128,117 +90,103 @@ const CurrencyForm = (props) => {
                 <Typography
                     style={{ alignItems: 'center', display: 'inline-flex' }}
                 >
-                    Buy
+                    Купівля
                 </Typography>
             </Grid>
-            <Grid
-                item
-                xs={props.mode === CurrencyFormMode.SEARCH ? 2 : 3}
-                style={{ padding: 10 }}
-            >
-                {props.mode === CurrencyFormMode.SEARCH ? (
-                    <FormControl
-                        variant="outlined"
-                        style={{
-                            width: '100%',
-                        }}
+            <Grid item xs={2} style={{ padding: 10 }}>
+                <FormControl
+                    variant="outlined"
+                    style={{
+                        width: '100%',
+                    }}
+                >
+                    <InputLabel>Відстань (км)</InputLabel>
+                    <Select
+                        value={distance}
+                        onChange={(event) => setDistance(event.target.value)}
+                        label="Distance"
                     >
-                        <InputLabel>Distance</InputLabel>
-                        <Select
-                            value={distance}
-                            onChange={(event) =>
-                                setDistance(event.target.value)
-                            }
-                            label="Currency"
-                        >
-                            <MenuItem value={-1}>any</MenuItem>
-                            <MenuItem value={0.5}>0.5</MenuItem>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                        </Select>
-                    </FormControl>
-                ) : (
-                    <FormControl variant="outlined">
-                        <TextField
-                            label="Amount"
-                            type="number"
-                            disabled={currency === ANY_CURRENCY}
-                            value={amount}
-                            onChange={(event) => {
-                                setAmount(event.target.value);
-                            }}
-                            inputProps={{
-                                style: {
-                                    padding: 10,
-                                },
-                            }}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </FormControl>
-                )}
+                        <MenuItem value={-1}>Не важливо</MenuItem>
+                        <MenuItem value={0.5}>0.5</MenuItem>
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
-            {props.mode === CurrencyFormMode.SEARCH ? (
-                <Grid item xs={3} style={{ padding: 10 }}>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        style={{
-                            width: '100%',
-                            background: '#282c34',
-                        }}
-                        onClick={handleFind}
-                    >
-                        Find
-                    </Button>
-                </Grid>
-            ) : (
-                <Grid item xs={3} style={{ padding: 10 }}>
-                    <FormControl variant="outlined">
-                        <TextField
-                            label="Total"
-                            type="number"
-                            value={total}
-                            disabled
-                            onChange={(event) => {
-                                setTotal(event.target.value);
-                            }}
-                            inputProps={{
-                                style: {
-                                    padding: 10,
-                                },
-                            }}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                    </FormControl>
-                </Grid>
-            )}
+            <Grid item xs={3} style={{ padding: 10 }}>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    style={{
+                        width: '100%',
+                        background: '#282c34',
+                    }}
+                    onClick={handleFind}
+                >
+                    Знайти
+                </Button>
+            </Grid>
             <Grid container style={{ background: 'white' }}>
-                <Grid item xs={12} style={{ padding: 10 }}>
+                <Grid item xs={6} style={{ padding: 10 }}>
                     <FormControl
                         variant="outlined"
                         style={{
                             width: '100%',
                         }}
                     >
-                        <InputLabel>Sort by</InputLabel>
+                        <InputLabel>Сортувати</InputLabel>
                         <Select
-                            value={currency}
+                            value={sortBy}
                             onChange={(event) => {
-                                setCurrency(event.target.value);
+                                setSortBy(event.target.value);
                             }}
-                            label="Sort by"
+                            label="Сортувати"
                         >
-                            <MenuItem value={'PRICE'}>Краща ціна</MenuItem>
-                            <MenuItem value={'DISTANCE'}>Відстань</MenuItem>
+                            <MenuItem value={SORT_BY.NO_SORT}>
+                                Не сортувати
+                            </MenuItem>
+                            <MenuItem value={SORT_BY.PRICE_ASC}>
+                                Ціна зростає
+                            </MenuItem>
+                            <MenuItem value={SORT_BY.PRICE_DESC}>
+                                Ціна спадає
+                            </MenuItem>
+                            <MenuItem value={SORT_BY.DISTANCE_ASC}>
+                                Відстань зростає
+                            </MenuItem>
+                            <MenuItem value={SORT_BY.DISTANCE_DESC}>
+                                Відстань спадає
+                            </MenuItem>
                         </Select>
                     </FormControl>
+                </Grid>
+                <Grid
+                    item
+                    xs={6}
+                    style={{
+                        padding: 10,
+                        color: '#282c34',
+                        justifyContent: 'center',
+                        display: 'inline-flex',
+                    }}
+                >
+                    <Switch
+                        checked={openNow}
+                        color="default"
+                        onChange={() => {
+                            setOpenNow(!openNow);
+                        }}
+                    />
+                    <Typography
+                        style={{
+                            alignItems: 'center',
+                            display: 'inline-flex',
+                            opacity: openNow ? 1 : 0.5,
+                        }}
+                    >
+                        Зараз відкрито
+                    </Typography>
                 </Grid>
             </Grid>
         </Grid>
@@ -246,5 +194,3 @@ const CurrencyForm = (props) => {
 };
 
 export default CurrencyForm;
-
-export { CurrencyFormMode };

@@ -10,18 +10,23 @@ export default [
         image: '',
         lastUpdate: '',
         baseCurrency: 'UAH',
+        workingHours: {
+            fullDay: false,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 27.6,
                 ask: 27.8,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.71,
                 ask: 33.05,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.37591,
                 ask: 0.381,
@@ -39,18 +44,23 @@ export default [
         image: '',
         lastUpdate: '',
         baseCurrency: 'UAH',
+        workingHours: {
+            fullDay: true,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 27.31,
                 ask: 27.82,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.65,
                 ask: 33.12,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.3739,
                 ask: 0.386,
@@ -68,18 +78,23 @@ export default [
         image: '',
         baseCurrency: 'UAH',
         lastUpdate: '',
+        workingHours: {
+            fullDay: false,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 27.3,
                 ask: 28.2,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.65,
                 ask: 33.22,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.3739,
                 ask: 0.3861,
@@ -97,18 +112,23 @@ export default [
         image: '',
         lastUpdate: '',
         baseCurrency: 'UAH',
+        workingHours: {
+            fullDay: false,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 28.1,
                 ask: 28.21,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.66,
                 ask: 33.39,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.37999,
                 ask: 0.386,
@@ -126,18 +146,23 @@ export default [
         image: '',
         lastUpdate: '',
         baseCurrency: 'UAH',
+        workingHours: {
+            fullDay: true,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 27.61,
                 ask: 27.56,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.71,
                 ask: 33.05,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.3771,
                 ask: 0.381,
@@ -155,28 +180,33 @@ export default [
         image: '',
         lastUpdate: '',
         baseCurrency: 'UAH',
+        workingHours: {
+            fullDay: false,
+            start: '',
+            end: ''
+        },
         rates: {
-            usd: {
+            USD: {
                 count: 1,
                 bid: 27.61,
                 ask: 27.79,
             },
-            eur: {
+            EUR: {
                 count: 1,
                 bid: 32.75,
                 ask: 23.1,
             },
-            rub: {
+            RUB: {
                 count: 1,
                 bid: 0.3759,
                 ask: 0.38112,
             },
-            cad: {
+            CAD: {
                 count: 1,
                 bid: 25.45,
                 ask: 26,
             },
-            jpy: {
+            JPY: {
                 count: 1,
                 bid: 5.45,
                 ask: 5.7,

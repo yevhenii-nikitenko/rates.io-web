@@ -4,13 +4,19 @@ import getDistanceBetweenPoints from './getDistanceBetweenPoints';
 const sort = ({ sortBy, operation, code, center }) => (prev, next) => {
     if (sortBy === SORT_BY.PRICE_ASC) {
         if (operation === operations.BUY) {
-            if (prev.rates[code].ask < next.rates[code].ask) {
+            if (
+                prev.rates[code].ask / prev.rates[code].count <
+                next.rates[code].ask / next.rates[code].count
+            ) {
                 return -1;
             }
         }
 
         if (operation === operations.SELL) {
-            if (prev.rates[code].bid < next.rates[code].bid) {
+            if (
+                prev.rates[code].bid / prev.rates[code].count <
+                next.rates[code].bid / next.rates[code].count
+            ) {
                 return -1;
             }
         }
@@ -18,13 +24,19 @@ const sort = ({ sortBy, operation, code, center }) => (prev, next) => {
 
     if (sortBy === SORT_BY.PRICE_DESC) {
         if (operation === operations.BUY) {
-            if (prev.rates[code].ask > next.rates[code].ask) {
+            if (
+                prev.rates[code].ask / prev.rates[code].count >
+                next.rates[code].ask / next.rates[code].count
+            ) {
                 return -1;
             }
         }
 
         if (operation === operations.SELL) {
-            if (prev.rates[code].bid > next.rates[code].bid) {
+            if (
+                prev.rates[code].bid / prev.rates[code].count >
+                next.rates[code].bid / next.rates[code].count
+            ) {
                 return -1;
             }
         }

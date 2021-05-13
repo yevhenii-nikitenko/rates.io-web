@@ -17,7 +17,9 @@ const Calculator = (props) => {
     const [amount, setAmount] = React.useState('');
     const [total, setTotal] = React.useState('');
     const [currency, setCurrency] = React.useState(
-        props.currency || ANY_CURRENCY,
+        props.currencies.includes(props.currency)
+            ? props.currency
+            : ANY_CURRENCY,
     );
 
     React.useEffect(() => {
@@ -29,7 +31,11 @@ const Calculator = (props) => {
     React.useEffect(() => {
         if (!props.currency) return;
 
-        setCurrency(props.currency);
+        setCurrency(
+            props.currencies.includes(props.currency)
+                ? props.currency
+                : ANY_CURRENCY,
+        );
     }, [props.currency]);
 
     // calculation

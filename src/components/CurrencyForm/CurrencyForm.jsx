@@ -34,7 +34,7 @@ const CurrencyForm = (props) => {
 
     return (
         <Grid container style={{ background: 'white' }}>
-            <Grid item xs={3} style={{ padding: 10 }}>
+            <Grid item xs={4} style={{ padding: 10 }}>
                 <FormControl
                     variant="outlined"
                     style={{
@@ -61,7 +61,7 @@ const CurrencyForm = (props) => {
             </Grid>
             <Grid
                 item
-                xs={4}
+                xs={5}
                 style={{
                     padding: 10,
                     color: '#282c34',
@@ -93,42 +93,30 @@ const CurrencyForm = (props) => {
                     Купівля
                 </Typography>
             </Grid>
-            <Grid item xs={2} style={{ padding: 10 }}>
+            <Grid item xs={3} style={{ padding: 10 }}>
                 <FormControl
                     variant="outlined"
                     style={{
                         width: '100%',
                     }}
                 >
-                    <InputLabel>Відстань (км)</InputLabel>
+                    <InputLabel>Відстань</InputLabel>
                     <Select
                         value={distance}
                         onChange={(event) => setDistance(event.target.value)}
                         label="Distance"
                     >
                         <MenuItem value={-1}>Не важливо</MenuItem>
-                        <MenuItem value={0.5}>0.5</MenuItem>
-                        <MenuItem value={1}>1</MenuItem>
-                        <MenuItem value={2}>2</MenuItem>
-                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={0.2}>200 м</MenuItem>
+                        <MenuItem value={0.5}>500 м</MenuItem>
+                        <MenuItem value={1}>1 км</MenuItem>
+                        <MenuItem value={2}>2 км</MenuItem>
+                        <MenuItem value={4}>4 км</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={3} style={{ padding: 10 }}>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    style={{
-                        width: '100%',
-                        background: '#282c34',
-                    }}
-                    onClick={handleFind}
-                >
-                    Знайти
-                </Button>
-            </Grid>
             <Grid container style={{ background: 'white' }}>
-                <Grid item xs={6} style={{ padding: 10 }}>
+                <Grid item xs={4} style={{ padding: 10 }}>
                     <FormControl
                         variant="outlined"
                         style={{
@@ -146,10 +134,16 @@ const CurrencyForm = (props) => {
                             <MenuItem value={SORT_BY.NO_SORT}>
                                 Не сортувати
                             </MenuItem>
-                            <MenuItem value={SORT_BY.PRICE_ASC}>
+                            <MenuItem
+                                disabled={currency === ANY_CURRENCY}
+                                value={SORT_BY.PRICE_ASC}
+                            >
                                 Ціна зростає
                             </MenuItem>
-                            <MenuItem value={SORT_BY.PRICE_DESC}>
+                            <MenuItem
+                                disabled={currency === ANY_CURRENCY}
+                                value={SORT_BY.PRICE_DESC}
+                            >
                                 Ціна спадає
                             </MenuItem>
                             <MenuItem value={SORT_BY.DISTANCE_ASC}>
@@ -163,7 +157,7 @@ const CurrencyForm = (props) => {
                 </Grid>
                 <Grid
                     item
-                    xs={6}
+                    xs={4}
                     style={{
                         padding: 10,
                         color: '#282c34',
@@ -187,6 +181,19 @@ const CurrencyForm = (props) => {
                     >
                         Зараз відкрито
                     </Typography>
+                </Grid>
+                <Grid item xs={4} style={{ padding: 10 }}>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        style={{
+                            width: '100%',
+                            background: '#282c34',
+                        }}
+                        onClick={handleFind}
+                    >
+                        Знайти
+                    </Button>
                 </Grid>
             </Grid>
         </Grid>

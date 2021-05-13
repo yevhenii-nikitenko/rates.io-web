@@ -44,7 +44,12 @@ const Popup = (props) => {
                                 </Paper>
                             </Grid>
                             <Grid item xs>
-                                <Paper className="rate-row">{currency}</Paper>
+                                <Paper className="rate-row">
+                                    {props.place.rates[currency].count === 1
+                                        ? ''
+                                        : props.place.rates[currency].count + ' '}
+                                    {currency}
+                                </Paper>
                             </Grid>
                             <Grid item xs>
                                 <Paper className="rate-row">

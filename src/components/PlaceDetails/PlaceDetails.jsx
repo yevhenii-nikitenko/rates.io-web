@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Calculator from '../Calculator/Calculator';
+import { RiExchangeDollarLine } from 'react-icons/ri';
 import { currencies, ANY_CURRENCY } from '../../constants';
 
 const PlaceDetails = (props) => {
@@ -52,13 +53,24 @@ const PlaceDetails = (props) => {
                     display: 'flex',
                 }}
             >
-                <CardMedia
-                    style={{
-                        width: '300px',
-                        height: '250px',
-                    }}
-                    image="https://img.budgettravel.com/_ampArticle/foreign-currency.jpg?mtime=20190709095321"
-                />
+                {props.image ? (
+                    <CardMedia
+                        style={{
+                            width: '300px',
+                            height: '250px',
+                        }}
+                        image={props.image}
+                    />
+                ) : (
+                    <RiExchangeDollarLine
+                        color="'#282c34"
+                        style={{
+                            fontSize: '140px',
+                            marginTop: '60px',
+                            width: '300px',
+                        }}
+                    />
+                )}
                 <div
                     style={{
                         display: 'flex',
@@ -143,6 +155,9 @@ const PlaceDetails = (props) => {
                                         {currency[1].bid}
                                     </Grid>
                                     <Grid item xs>
+                                        {currency[1].count === 1
+                                            ? ''
+                                            : currency[1].count}{' '}
                                         {currency[0]}
                                     </Grid>
                                     <Grid item xs>

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import getDistanceBetweenPoints from '../../libs/getDistanceBetweenPoints';
 import AvarageRate from '../AvarageRate/AvarageRate';
-import { operations, ANY_CURRENCY, sortBy as SORT_BY } from '../../constants';
+import { operations, ANY_CURRENCY } from '../../constants';
 import { setOnMouseOver, cleatOnMouseLeave } from '../../store/actions';
 import sortComparator from '../../libs/sortComparator';
 
@@ -40,6 +40,7 @@ const ExchangersList = () => {
                 return place;
             }
         })
+        // TODO
         // add openNow filter
         .filter((exchange) => {
             if (!currency.code) return true;
@@ -67,8 +68,8 @@ const ExchangersList = () => {
 
             acc +=
                 operation === operations.BUY
-                    ? selectedCurrency.ask
-                    : selectedCurrency.bid;
+                    ? selectedCurrency.ask / selectedCurrency.count
+                    : selectedCurrency.bid / selectedCurrency.count;
 
             return acc;
         }, 0) / filteredList.length;
@@ -91,7 +92,7 @@ const ExchangersList = () => {
                 <AvarageRate
                     operation={operation}
                     currency={currency}
-                    avarage={avarage.toFixed(2)}
+                    avarage={avarage.toFixed(4)}
                 />
             ) : null}
             {selected ? (

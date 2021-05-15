@@ -3,7 +3,11 @@ import GoogleMap from 'google-map-react';
 import { useSelector, useDispatch } from 'react-redux';
 import Marker from '../Marker/Marker.jsx';
 import getCurrentLocation from '../../libs/getCurrentLocation';
-import { setCurrentCity, setMapCenter } from '../../store/actions';
+import {
+    setCurrentCity,
+    setMapCenter,
+    deselectExchange,
+} from '../../store/actions';
 import StartingPoint from '../StartingPoint/StartingPoint.jsx';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
 import { events } from '../../constants';
@@ -15,7 +19,9 @@ const Map = () => {
     const [circle, setCircle] = React.useState(null);
     const mapCenter = useSelector((state) => state.geo.mapCenter);
     const { list, hovered } = useSelector((state) => state.exchanges);
-    const distance = useSelector((state) => state.search.distance);
+    const { distance, currency, operation } = useSelector(
+        (state) => state.search,
+    );
 
     const { setAutocompleteService, setPlacesService } = React.useContext(
         GoogleMapsServicesContext,
@@ -116,7 +122,10 @@ const Map = () => {
                         lat={place.lat}
                         lng={place.lng}
                         place={place}
+                        currency={currency}
+                        operation={operation}
                         pulsate={place === hovered}
+                        deselectExchange={() => dispatch(deselectExchange())}
                     />
                 ))}
                 {mapCenter ? (

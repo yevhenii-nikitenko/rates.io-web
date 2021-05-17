@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import getDistanceBetweenPoints from '../../libs/getDistanceBetweenPoints';
+import filteredExchangers from '../../libs/filteredExchangers';
 import AvarageRate from '../AvarageRate/AvarageRate';
 import { operations, ANY_CURRENCY } from '../../constants';
 import { setOnMouseOver, cleatOnMouseLeave } from '../../store/actions';
@@ -27,26 +27,12 @@ const ExchangersList = () => {
         mapCenter &&
         new window.google.maps.LatLng(mapCenter.lat, mapCenter.lng);
 
-    const filteredList = list
-        .filter((place) => {
-            // filters by location
-            if (!center) return;
-
-            if (distance === -1) return place;
-
-            const point = new window.google.maps.LatLng(place.lat, place.lng);
-
-            if (getDistanceBetweenPoints(center, point) <= distance * 1000) {
-                return place;
-            }
-        })
-        // TODO
-        // add openNow filter
-        .filter((exchange) => {
-            if (!currency.code) return true;
-
-            return exchange.rates[currency.code];
-        });
+    const filteredList = filteredExchangers({
+        list,
+        center,
+        distance,
+        currency,
+    });
 
     const sorted = !currency.code
         ? filteredList

@@ -10,6 +10,7 @@ import {
 } from '../../store/actions';
 import StartingPoint from '../StartingPoint/StartingPoint.jsx';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
+// import filteredExchangers from '../../libs/filteredExchangers';
 import { events } from '../../constants';
 
 const EXCHANGER_CARD_CLASS = '.exchanger-card';
@@ -72,6 +73,10 @@ const Map = () => {
         }, 100);
     }, [mapCenter, distance]);
 
+    const center =
+        mapCenter &&
+        new window.google.maps.LatLng(mapCenter.lat, mapCenter.lng);
+
     const dispatch = useDispatch();
     const handleApiLoaded = ({ maps, map }) => {
         setMap(map);
@@ -116,18 +121,24 @@ const Map = () => {
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={handleApiLoaded}
             >
-                {list.map((place) => (
-                    <Marker
-                        key={place.id}
-                        lat={place.lat}
-                        lng={place.lng}
-                        place={place}
-                        currency={currency}
-                        operation={operation}
-                        pulsate={place === hovered}
-                        deselectExchange={() => dispatch(deselectExchange())}
-                    />
-                ))}
+                {
+                    /*filteredExchangers({ list, center, distance, currency })*/ list.map(
+                        (place) => (
+                            <Marker
+                                key={place.id}
+                                lat={place.lat}
+                                lng={place.lng}
+                                place={place}
+                                currency={currency}
+                                operation={operation}
+                                pulsate={place === hovered}
+                                deselectExchange={() =>
+                                    dispatch(deselectExchange())
+                                }
+                            />
+                        ),
+                    )
+                }
                 {mapCenter ? (
                     <StartingPoint lat={mapCenter.lat} lng={mapCenter.lng} />
                 ) : null}

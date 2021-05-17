@@ -35,6 +35,7 @@ const Marker = (props) => {
                 <Pin
                     handleClick={handleClick}
                     pulsate={props.pulsate || open}
+                    minimize={props.currency.code}
                     price={setPrice(
                         props.place.rates[props.currency.code],
                         props.operation,

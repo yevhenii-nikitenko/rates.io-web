@@ -8,13 +8,16 @@
     left: 50%;
     top: -20px;
     margin: -20px 0 0 -20px;
-    cursor: pointer;
+}
+
+.inactive-pin {
+    opacity: 0.5;
 }
 
 .bounce {
-    animation-name: bounce;
+    /* animation-name: bounce;
     animation-fill-mode: both;
-    animation-duration: 1s;
+    animation-duration: 1s; */
 }
 
 .pulse {

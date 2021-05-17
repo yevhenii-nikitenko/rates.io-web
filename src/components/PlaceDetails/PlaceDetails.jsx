@@ -184,7 +184,7 @@ const PlaceDetails = (props) => {
                                     setExpanded(true);
                                 }}
                             >
-                                Більше
+                                Відкрити
                             </Button>
                         )}
                     </CardActions>
@@ -212,7 +212,7 @@ const PlaceDetails = (props) => {
                             setExpanded(false);
                         }}
                     >
-                        Сховати
+                        Закрити
                     </Button>
                 </div>
             ) : null}

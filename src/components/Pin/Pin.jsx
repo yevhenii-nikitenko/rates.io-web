@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { RiExchangeDollarLine } from 'react-icons/ri';
 import './Pin.css';
 
@@ -7,19 +6,36 @@ const Pin = (props) => {
     return (
         <>
             {props.price ? (
-                <Typography
-                    style={{
-                        background: '#282c34',
-                        color: 'white',
-                        padding: '5px',
-                        display: 'initial',
-                    }}
+                <>
+                    <div className={'pin bounce'} onClick={props.handleClick}>
+                        {props.price ? (
+                            <div
+                                style={{
+                                    background: '#282c34',
+                                    color: 'white',
+                                    padding: '10px',
+                                    display: 'initial',
+                                    transform: 'rotate(45deg)',
+                                    position: 'absolute',
+                                    left: '-50%',
+                                    textAlign: 'center',
+                                    width: '40px',
+                                }}
+                            >
+                                {props.price}
+                            </div>
+                        ) : (
+                            <RiExchangeDollarLine size="2.7em" color="white" />
+                        )}
+                    </div>
+                </>
+            ) : (
+                <div
+                    className={
+                        'pin bounce ' + (props.minimize ? 'inactive-pin' : '')
+                    }
                     onClick={props.handleClick}
                 >
-                    {props.price}
-                </Typography>
-            ) : (
-                <div className={'pin bounce'} onClick={props.handleClick}>
                     <RiExchangeDollarLine size="2.7em" color="white" />
                 </div>
             )}

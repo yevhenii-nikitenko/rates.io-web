@@ -51,6 +51,13 @@ const Map = () => {
             }
         });
 
+        map.fitBounds(
+            new window.google.maps.Circle({
+                radius: distance * 1000,
+                center: mapCenter,
+            }).getBounds(),
+        );
+
         setCircle(circle);
     };
 
@@ -73,9 +80,9 @@ const Map = () => {
         }, 100);
     }, [mapCenter, distance]);
 
-    const center =
-        mapCenter &&
-        new window.google.maps.LatLng(mapCenter.lat, mapCenter.lng);
+    // const center =
+    //     mapCenter &&
+    //     new window.google.maps.LatLng(mapCenter.lat, mapCenter.lng);
 
     const dispatch = useDispatch();
     const handleApiLoaded = ({ maps, map }) => {
@@ -116,6 +123,9 @@ const Map = () => {
                 defaultCenter={{
                     lat: 50.463528,
                     lng: 30.5053546,
+                }}
+                options={{
+                    clickableIcons: false,
                 }}
                 defaultZoom={14}
                 yesIWantToUseGoogleMapApiInternals

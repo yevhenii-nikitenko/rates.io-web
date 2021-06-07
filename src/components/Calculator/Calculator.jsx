@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -163,6 +164,23 @@ const Calculator = (props) => {
             </Grid>
         </Grid>
     );
+};
+
+Calculator.propTypes = {
+    currencies: PropTypes.arrayOf(
+        PropTypes.shape({
+            code: PropTypes.string,
+            name: PropTypes.string.isRequired,
+            symbol: PropTypes.string,
+        }),
+    ),
+    rates: PropTypes.object,
+    operation: PropTypes.string.isRequired,
+    currency: PropTypes.shape({
+        code: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        symbol: PropTypes.string,
+    }),
 };
 
 export default Calculator;

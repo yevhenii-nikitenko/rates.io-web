@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +25,16 @@ const AvarageRate = (props) => {
             </CardContent>
         </Card>
     );
+};
+
+AvarageRate.propTypes = {
+    operation: PropTypes.string.isRequired,
+    currency: PropTypes.shape({
+        code: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        symbol: PropTypes.string,
+    }),
+    avarage: PropTypes.number,
 };
 
 export default AvarageRate;

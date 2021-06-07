@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { RiExchangeDollarLine } from 'react-icons/ri';
 import './Pin.css';
 
@@ -43,6 +44,12 @@ const Pin = (props) => {
             {props.pulsate ? <div className="pulse"></div> : null}
         </>
     );
+};
+
+Pin.propTypes = {
+    minimize: PropTypes.bool,
+    handleClick: PropTypes.func.isRequired,
+    price: PropTypes.number,
 };
 
 export default Pin;

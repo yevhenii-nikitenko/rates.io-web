@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
@@ -47,7 +48,8 @@ const Popup = (props) => {
                                 <Paper className="rate-row">
                                     {props.place.rates[currency].count === 1
                                         ? ''
-                                        : props.place.rates[currency].count + ' '}
+                                        : props.place.rates[currency].count +
+                                          ' '}
                                     {currency}
                                 </Paper>
                             </Grid>
@@ -62,6 +64,36 @@ const Popup = (props) => {
             </CardContent>
         </Card>
     );
+};
+
+Popup.propTypes = {
+    // TODO
+    // rename to exchanger
+    place: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+        placeId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        phone: PropTypes.string,
+        image: PropTypes.string,
+        lastUpdate: PropTypes.string,
+        baseCurrency: PropTypes.string.isRequired,
+        workingHours: PropTypes.shape({
+            fullDay: PropTypes.bool.isRequired,
+            start: PropTypes.string,
+            end: PropTypes.string,
+        }).isRequired,
+        rates: PropTypes.object,
+        // rates: PropTypes.arrayOf(
+        //     PropTypes.shape({
+        //         code: PropTypes.string,
+        //         name: PropTypes.string.isRequired,
+        //         symbol: PropTypes.string,
+        //     }),
+        // ),
+    }),
 };
 
 export default Popup;

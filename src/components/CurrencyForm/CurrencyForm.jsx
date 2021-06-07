@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -198,6 +199,16 @@ const CurrencyForm = (props) => {
             </Grid>
         </Grid>
     );
+};
+
+CurrencyForm.propTypes = {
+    currencies: PropTypes.arrayOf(
+        PropTypes.shape({
+            code: PropTypes.string,
+            name: PropTypes.string.isRequired,
+            symbol: PropTypes.string,
+        }),
+    ),
 };
 
 export default CurrencyForm;

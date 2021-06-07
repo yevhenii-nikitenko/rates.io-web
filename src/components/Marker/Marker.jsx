@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Pin from '../Pin/Pin';
 import Popup from '../Popup/Popup';
@@ -35,7 +36,7 @@ const Marker = (props) => {
                 <Pin
                     handleClick={handleClick}
                     pulsate={props.pulsate || open}
-                    minimize={props.currency.code}
+                    minimize={!!props.currency.code}
                     price={setPrice(
                         props.place.rates[props.currency.code],
                         props.operation,
@@ -45,6 +46,49 @@ const Marker = (props) => {
             </div>
         </ClickAwayListener>
     );
+};
+
+Marker.propTypes = {
+    currencies: PropTypes.arrayOf(
+        PropTypes.shape({
+            code: PropTypes.string,
+            name: PropTypes.string.isRequired,
+            symbol: PropTypes.string,
+        }),
+    ),
+    deselectExchange: PropTypes.func.isRequired,
+    pulsate: PropTypes.bool,
+    operation: PropTypes.string.isRequired,
+    currency: PropTypes.shape({
+        code: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        symbol: PropTypes.string,
+    }),
+    place: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+        placeId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        phone: PropTypes.string,
+        image: PropTypes.string,
+        lastUpdate: PropTypes.string,
+        baseCurrency: PropTypes.string.isRequired,
+        workingHours: PropTypes.shape({
+            fullDay: PropTypes.bool.isRequired,
+            start: PropTypes.string,
+            end: PropTypes.string,
+        }).isRequired,
+        rates: PropTypes.object,
+        // rates: PropTypes.arrayOf(
+        //     PropTypes.shape({
+        //         code: PropTypes.string,
+        //         name: PropTypes.string.isRequired,
+        //         symbol: PropTypes.string,
+        //     }),
+        // ),
+    }),
 };
 
 export default Marker;

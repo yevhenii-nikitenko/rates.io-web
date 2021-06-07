@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
@@ -53,13 +54,13 @@ const PlaceDetails = (props) => {
                     display: 'flex',
                 }}
             >
-                {props.image ? (
+                {props.exchanger.image ? (
                     <CardMedia
                         style={{
                             width: '300px',
                             height: '250px',
                         }}
-                        image={props.image}
+                        image={props.exchanger.image}
                     />
                 ) : (
                     <RiExchangeDollarLine
@@ -218,6 +219,43 @@ const PlaceDetails = (props) => {
             ) : null}
         </Card>
     );
+};
+
+PlaceDetails.propTypes = {
+    expanded: PropTypes.bool,
+    mouseEnterHandler: PropTypes.func,
+    mouseLeaveHandler: PropTypes.func,
+    exchanger: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+        placeId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        phone: PropTypes.string,
+        image: PropTypes.string,
+        lastUpdate: PropTypes.string,
+        baseCurrency: PropTypes.string.isRequired,
+        workingHours: PropTypes.shape({
+            fullDay: PropTypes.bool.isRequired,
+            start: PropTypes.string,
+            end: PropTypes.string,
+        }).isRequired,
+        rates: PropTypes.object,
+        // rates: PropTypes.arrayOf(
+        //     PropTypes.shape({
+        //         code: PropTypes.string,
+        //         name: PropTypes.string.isRequired,
+        //         symbol: PropTypes.string,
+        //     }),
+        // ),
+    }),
+    operation: PropTypes.string.isRequired,
+    currency: PropTypes.shape({
+        code: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        symbol: PropTypes.string,
+    }),
 };
 
 export default PlaceDetails;

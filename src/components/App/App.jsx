@@ -8,7 +8,7 @@ import ExchangersList from '../ExchangersList/ExchangersList';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
 import { setExchanges } from '../../store/actions';
 
-import places from '../../db/places';
+import exchangers from '../../db/exchangers';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -21,8 +21,9 @@ const App = () => {
         currentCity &&
             dispatch(
                 setExchanges(
-                    places.filter(
-                        (place) => place.placeId === currentCity.place_id,
+                    exchangers.filter(
+                        (exchanger) =>
+                            exchanger.placeId === currentCity.place_id,
                     ),
                 ),
             );

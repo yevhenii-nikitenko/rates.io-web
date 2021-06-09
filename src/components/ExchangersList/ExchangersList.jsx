@@ -1,5 +1,5 @@
 import React from 'react';
-import PlaceDetails from '../PlaceDetails/PlaceDetails';
+import ExchangerDetails from '../ExchangerDetails/ExchangerDetails';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import filteredExchangers from '../../libs/filteredExchangers';
@@ -84,7 +84,7 @@ const ExchangersList = () => {
             {selected ? (
                 <Grid container>
                     <Grid item xs={12}>
-                        <PlaceDetails
+                        <ExchangerDetails
                             exchanger={selected}
                             operation={operation}
                             currency={currency}
@@ -95,7 +95,7 @@ const ExchangersList = () => {
             ) : (
                 sorted.map((exchange) => {
                     return (
-                        <PlaceDetails
+                        <ExchangerDetails
                             key={exchange.id}
                             exchanger={exchange}
                             operation={operation}

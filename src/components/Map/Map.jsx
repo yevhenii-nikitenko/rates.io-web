@@ -133,15 +133,15 @@ const Map = () => {
             >
                 {
                     /*filteredExchangers({ list, center, distance, currency })*/ list.map(
-                        (place) => (
+                        (exchanger) => (
                             <Marker
-                                key={place.id}
-                                lat={place.lat}
-                                lng={place.lng}
-                                place={place}
+                                key={exchanger.id}
+                                lat={exchanger.lat}
+                                lng={exchanger.lng}
+                                exchanger={exchanger}
                                 currency={currency}
                                 operation={operation}
-                                pulsate={place === hovered}
+                                pulsate={exchanger === hovered}
                                 deselectExchange={() =>
                                     dispatch(deselectExchange())
                                 }

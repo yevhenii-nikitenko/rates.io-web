@@ -8,12 +8,12 @@ export default [
         address: 'Mezhyhirska street, near Apteca',
         phone: '+380996660616',
         image: '',
-        lastUpdate: '',
+        lastUpdate: 1623264239574,
         baseCurrency: 'UAH',
         workingHours: {
             fullDay: false,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {
@@ -42,12 +42,12 @@ export default [
         address: 'NSK, velyka vasylkivska',
         phone: '+380996660617',
         image: '',
-        lastUpdate: '',
+        lastUpdate: 1623264219574,
         baseCurrency: 'UAH',
         workingHours: {
             fullDay: true,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {
@@ -77,11 +77,11 @@ export default [
         phone: '+380996660600',
         image: '',
         baseCurrency: 'UAH',
-        lastUpdate: '',
+        lastUpdate: 1623264234574,
         workingHours: {
             fullDay: false,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {
@@ -110,12 +110,12 @@ export default [
         address: 'Hetmana 33',
         phone: '+380996699999',
         image: '',
-        lastUpdate: '',
+        lastUpdate: 1623264239000,
         baseCurrency: 'UAH',
         workingHours: {
             fullDay: false,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {
@@ -144,12 +144,12 @@ export default [
         address: 'xz',
         phone: '+380996660000',
         image: '',
-        lastUpdate: '',
+        lastUpdate: 1623264239014,
         baseCurrency: 'UAH',
         workingHours: {
             fullDay: true,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {
@@ -174,16 +174,17 @@ export default [
         lat: 50.47032071457849,
         lng: 30.521811373320006,
         name: 'Khoryva',
-        address: 'Naberezhno-Khreschatiskaya cross Khoryva somewhere on the street',
+        address:
+            'Naberezhno-Khreschatiskaya cross Khoryva somewhere on the street',
         placeId: 'ChIJBUVa4U7P1EAR_kYBF9IxSXY',
         phone: '+380996566672',
         image: '',
-        lastUpdate: '',
+        lastUpdate: 1623264140574,
         baseCurrency: 'UAH',
         workingHours: {
             fullDay: false,
             start: '',
-            end: ''
+            end: '',
         },
         rates: {
             USD: {

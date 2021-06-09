@@ -34,7 +34,7 @@ AvarageRate.propTypes = {
         name: PropTypes.string.isRequired,
         symbol: PropTypes.string,
     }),
-    avarage: PropTypes.number,
+    avarage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default AvarageRate;

@@ -25,14 +25,14 @@ const Popup = (props) => {
             <CardActions>
                 <Button
                     fullWidth
-                    onClick={() => dispatch(selectExchange(props.place))}
+                    onClick={() => dispatch(selectExchange(props.exchanger))}
                 >
-                    {props.place.name}
+                    {props.exchanger.name}
                 </Button>
             </CardActions>
             <CardContent>
                 <Grid container spacing={2}>
-                    {Object.keys(props.place.rates).map((currency, index) => (
+                    {Object.keys(props.exchanger.rates).map((currency, index) => (
                         <Grid
                             container
                             key={index}
@@ -41,21 +41,21 @@ const Popup = (props) => {
                         >
                             <Grid item xs>
                                 <Paper className="rate-row">
-                                    {props.place.rates[currency].bid}
+                                    {props.exchanger.rates[currency].bid}
                                 </Paper>
                             </Grid>
                             <Grid item xs>
                                 <Paper className="rate-row">
-                                    {props.place.rates[currency].count === 1
+                                    {props.exchanger.rates[currency].count === 1
                                         ? ''
-                                        : props.place.rates[currency].count +
+                                        : props.exchanger.rates[currency].count +
                                           ' '}
                                     {currency}
                                 </Paper>
                             </Grid>
                             <Grid item xs>
                                 <Paper className="rate-row">
-                                    {props.place.rates[currency].ask}
+                                    {props.exchanger.rates[currency].ask}
                                 </Paper>
                             </Grid>
                         </Grid>
@@ -67,9 +67,7 @@ const Popup = (props) => {
 };
 
 Popup.propTypes = {
-    // TODO
-    // rename to exchanger
-    place: PropTypes.shape({
+    exchanger: PropTypes.shape({
         id: PropTypes.string.isRequired,
         lat: PropTypes.number.isRequired,
         lng: PropTypes.number.isRequired,
@@ -78,7 +76,7 @@ Popup.propTypes = {
         address: PropTypes.string.isRequired,
         phone: PropTypes.string,
         image: PropTypes.string,
-        lastUpdate: PropTypes.string,
+        lastUpdate: PropTypes.number,
         baseCurrency: PropTypes.string.isRequired,
         workingHours: PropTypes.shape({
             fullDay: PropTypes.bool.isRequired,

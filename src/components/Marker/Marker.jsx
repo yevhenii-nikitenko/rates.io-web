@@ -38,11 +38,11 @@ const Marker = (props) => {
                     pulsate={props.pulsate || open}
                     minimize={!!props.currency.code}
                     price={setPrice(
-                        props.place.rates[props.currency.code],
+                        props.exchanger.rates[props.currency.code],
                         props.operation,
                     )}
                 />
-                {open ? <Popup place={props.place} /> : null}
+                {open ? <Popup exchanger={props.exchanger} /> : null}
             </div>
         </ClickAwayListener>
     );
@@ -64,7 +64,7 @@ Marker.propTypes = {
         name: PropTypes.string.isRequired,
         symbol: PropTypes.string,
     }),
-    place: PropTypes.shape({
+    exchanger: PropTypes.shape({
         id: PropTypes.string.isRequired,
         lat: PropTypes.number.isRequired,
         lng: PropTypes.number.isRequired,

@@ -11,7 +11,7 @@ import Calculator from '../Calculator/Calculator';
 import { RiExchangeDollarLine } from 'react-icons/ri';
 import { currencies, ANY_CURRENCY } from '../../constants';
 
-const PlaceDetails = (props) => {
+const ExchangerDetails = (props) => {
     const [expanded, setExpanded] = React.useState(props.expanded);
 
     const getExchangerCurrencies = () => {
@@ -221,7 +221,7 @@ const PlaceDetails = (props) => {
     );
 };
 
-PlaceDetails.propTypes = {
+ExchangerDetails.propTypes = {
     expanded: PropTypes.bool,
     mouseEnterHandler: PropTypes.func,
     mouseLeaveHandler: PropTypes.func,
@@ -234,7 +234,7 @@ PlaceDetails.propTypes = {
         address: PropTypes.string.isRequired,
         phone: PropTypes.string,
         image: PropTypes.string,
-        lastUpdate: PropTypes.string,
+        lastUpdate: PropTypes.number,
         baseCurrency: PropTypes.string.isRequired,
         workingHours: PropTypes.shape({
             fullDay: PropTypes.bool.isRequired,
@@ -258,4 +258,4 @@ PlaceDetails.propTypes = {
     }),
 };
 
-export default PlaceDetails;
+export default ExchangerDetails;

@@ -37,6 +37,11 @@ const ExchangerDetails = (props) => {
         }
     };
 
+    const getLastUpdated = (utc) => {
+        const time = new Date(utc);
+        return `${time.toLocaleDateString()} ${time.getHours()}:${time.getMinutes()}`;
+    };
+
     return (
         <Card
             style={{
@@ -119,7 +124,8 @@ const ExchangerDetails = (props) => {
                                 float: 'right',
                             }}
                         >
-                            updated: {props.exchanger.lastUpdate || '16:50'}
+                            оновлено:{' '}
+                            {getLastUpdated(props.exchanger.lastUpdate)}
                         </Typography>
                         <Grid container>
                             <Grid

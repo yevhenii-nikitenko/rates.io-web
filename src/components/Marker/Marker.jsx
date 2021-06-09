@@ -73,7 +73,7 @@ Marker.propTypes = {
         address: PropTypes.string.isRequired,
         phone: PropTypes.string,
         image: PropTypes.string,
-        lastUpdate: PropTypes.string,
+        lastUpdate: PropTypes.number,
         baseCurrency: PropTypes.string.isRequired,
         workingHours: PropTypes.shape({
             fullDay: PropTypes.bool.isRequired,

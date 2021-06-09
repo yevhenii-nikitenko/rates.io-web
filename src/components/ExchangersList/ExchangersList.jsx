@@ -32,6 +32,7 @@ const ExchangersList = () => {
         center,
         distance,
         currency,
+        openNow
     });
 
     const sorted = !currency.code

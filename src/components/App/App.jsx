@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import './App.css';
 import Map from '../Map/Map.jsx';
 import Grid from '@material-ui/core/Grid';
@@ -39,15 +46,27 @@ const App = () => {
             }}
         >
             <div className="app-root">
-                <Grid container>
-                    <Grid item xs={5}>
-                        <Header />
-                        <ExchangersList />
-                    </Grid>
-                    <Grid item xs={7}>
-                        <Map />
-                    </Grid>
-                </Grid>
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <Redirect to="/app" />
+                        </Route>
+                        <Route path="/app">
+                            <Grid container>
+                                <Grid item xs={5}>
+                                    <Header />
+                                    <ExchangersList />
+                                </Grid>
+                                <Grid item xs={7}>
+                                    <Map />
+                                </Grid>
+                            </Grid>
+                        </Route>
+                        <Route path="/admin">
+                            <div>Admin</div>
+                        </Route>
+                    </Switch>
+                </Router>
             </div>
         </GoogleMapsServicesContext.Provider>
     );

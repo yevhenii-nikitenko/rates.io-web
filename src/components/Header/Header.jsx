@@ -34,12 +34,9 @@ const Header = () => {
                             style={{
                                 float: 'right',
                             }}
-                            onClick={(e) => gotoAdmin()}
+                            onClick={() => gotoAdmin()}
                         >
-                            <SupervisedUserCircleIcon
-                                size="1.2em"
-                                color="white"
-                            />
+                            <SupervisedUserCircleIcon size="1.2em" />
                         </IconButton>
                     </Grid>
                 </Grid>

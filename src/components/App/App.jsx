@@ -4,7 +4,6 @@ import {
     Switch,
     Route,
     Redirect,
-    Link,
 } from 'react-router-dom';
 import './App.css';
 import Map from '../Map/Map.jsx';
@@ -14,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ExchangersList from '../ExchangersList/ExchangersList';
 import GoogleMapsServicesContext from '../../context/googleMapsServices';
 import { setExchanges } from '../../store/actions';
+import Admin from '../Admin/Admin';
 
 import exchangers from '../../db/exchangers';
 
@@ -63,7 +63,7 @@ const App = () => {
                             </Grid>
                         </Route>
                         <Route path="/admin">
-                            <div>Admin</div>
+                            <Admin />
                         </Route>
                     </Switch>
                 </Router>
